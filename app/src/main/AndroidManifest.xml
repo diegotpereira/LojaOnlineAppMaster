@@ -10,6 +10,22 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".ui.ui.EsqueceuSenhaActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.login.EsqueceuSenhaActivity"
+            android:exported="false"
+            android:label="@string/title_activity_esqueceu_senha" />
+        <activity
+            android:name=".ui.AdminActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.RegistrarActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.EntrarActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.UsuarioPerfilActivity"
             android:exported="false" />
         <activity

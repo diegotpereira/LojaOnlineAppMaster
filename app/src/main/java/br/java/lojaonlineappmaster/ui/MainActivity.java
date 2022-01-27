@@ -2,11 +2,13 @@ package br.java.lojaonlineappmaster.ui;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -16,6 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 import br.java.lojaonlineappmaster.R;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -119,7 +122,35 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
         if (id == R.id.Perfil) {
             startActivity(new Intent(MainActivity.this, UsuarioPerfilActivity.class));
+        } else if (id == R.id.Logout) {
+            VerificarLogout();
         }
         return false;
+    }
+    private void VerificarLogout() {
+        AlertDialog.Builder verifiqueAlerta = new AlertDialog.Builder(MainActivity.this);
+        verifiqueAlerta.setMessage("Deseja sair?")
+                .setCancelable(false).setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(MainActivity.this, EntrarActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        }).setNegativeButton("Não", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.cancel();
+            }
+        });
+        AlertDialog alert = verifiqueAlerta.create();
+        alert.setTitle("Sair");
+        alert.show();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
     }
 }
