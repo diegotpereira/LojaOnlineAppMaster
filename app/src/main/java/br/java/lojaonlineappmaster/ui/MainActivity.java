@@ -7,6 +7,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -53,17 +54,72 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout.addDrawerListener(mtoggle);
         mtoggle.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-
     }
 
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        return false;
+    protected void onStart() {
+        super.onStart();
+
+        // Recuperar dados do usuário da visualização de cabeçalho
+        Dados_cabecalho_visualizacao_navegacao();
+
+        // Recuperar Favoritos
+        Recuperar_favoritos();
+
+        // Primeira visualização
+        Recuperar_eletronicos();
+
+        // Segunda visualização
+        Recuperar_frutas();
+
+        // Terceira visualização
+        Recuperar_Carnes();
+
+        // Quarta visualização
+        Recuperar_vegetais();
+
+        // OFERTAS
+        Recuperar_ofertas();
+
+        // Ícone de atualização do carrinho
+        exibirIconeCarrinho();
+
+        // para verificar se o preço total é zero ou não
+        verificarPrecoTotalZero();
     }
+    public void Dados_cabecalho_visualizacao_navegacao() {}
+
+    public void Recuperar_favoritos() {}
+
+    public void Recuperar_eletronicos() {}
+
+    public void Recuperar_frutas() {}
+
+    public void Recuperar_Carnes() {}
+
+    public void Recuperar_vegetais() {}
+
+    public void Recuperar_ofertas() {}
 
     public void exibirIconeCarrinho() {
 
         CarrinhoPersonalizadoContainer = (RelativeLayout) findViewById(R.id.CustomCartIconContainer);
+    }
+
+    public void verificarPrecoTotalZero(){}
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (mtoggle.onOptionsItemSelected(item)) return true;
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.Perfil) {
+            startActivity(new Intent(MainActivity.this, UsuarioPerfilActivity.class));
+        }
+        return false;
     }
 }

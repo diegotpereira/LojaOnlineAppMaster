@@ -6,7 +6,7 @@
             android:icon="@drawable/ic_baseline_home_24"
             android:title="@string/home" />
         <item
-            android:id="@+id/Profile"
+            android:id="@+id/Perfil"
             android:icon="@drawable/profile_icon"
             android:title="@string/profile" />
         <item
@@ -27,17 +27,17 @@
         <menu>
             <item
                 android:id="@+id/fruits"
-                android:title="   Fruits" />
+                android:title="Frutas" />
             <item
                 android:id="@+id/vegetables"
-                android:title="   Vegetables" />
+                android:title="Vegetais" />
 
             <item
                 android:id="@+id/meats"
-                android:title="   Meats" />
+                android:title="Carnes" />
             <item
                 android:id="@+id/electronics"
-                android:title="   Electronics" />
+                android:title="Eletrônicos" />
         </menu>
     </item>
     <item android:title="@string/logout">
