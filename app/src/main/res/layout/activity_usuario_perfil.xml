@@ -43,9 +43,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/ProfileCover"
-            android:layout_marginTop="-5dp"
             android:layout_marginLeft="20dp"
-            app:srcCompat="@drawable/new_camera"/>
+            android:layout_marginTop="-5dp"
+            app:srcCompat="@drawable/new_camera" />
 
 
         <include layout="@layout/main2_toolbar"
