@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/PrContainer"
+    android:background="@drawable/product_container"
+    android:layout_margin="20dp">
+
+
+    <ImageView
+        android:id="@+id/PrImagem"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:id="@+id/PrNome"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:layout_below="@id/PrImagem"
+        android:text=""
+        android:gravity="center"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        android:textColor="#000"/>
+
+    <TextView
+        android:id="@+id/PrPreco"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:layout_below="@id/PrNome"
+        android:text=""
+        android:gravity="center"
+        android:textSize="18dp"
+        android:textColor="#000"
+        android:layout_marginTop="15dp"/>
+
+    <TextView
+        android:id="@+id/PrDataVencimento"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:layout_below="@id/PrPreco"
+        android:text=""
+        android:gravity="center"
+        android:textSize="18dp"
+        android:textColor="#000"
+        android:layout_marginTop="15dp"
+        android:visibility="invisible"/>
+
+
+    <ImageView
+        android:id="@+id/PrFavoritaImagem"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/PrDataVencimento"
+        android:layout_marginBottom="3dp"
+        android:layout_marginRight="3dp"/>
+
+</RelativeLayout>
