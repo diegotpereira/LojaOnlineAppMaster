@@ -5,6 +5,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.viewpager.widget.ViewPager;
 
@@ -28,6 +29,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,6 +58,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private TextView PaginaTitulo;
     private ImageView CarrinhoPersonalizadoIcone;
 
+    private String Uid;
+    private String nome;
+    private String foto;
+    private CircleImageView imagem;
 
 
     @Override
@@ -108,7 +114,33 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // para verificar se o preço total é zero ou não
         verificarPrecoTotalZero();
     }
-    public void Dados_cabecalho_visualizacao_navegacao() {}
+    public void Dados_cabecalho_visualizacao_navegacao() {
+        DatabaseReference root = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference m = root.child("usuarios").child(Uid);
+
+        ValueEventListener eventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    nome = snapshot.child("Nome").getValue().toString();
+                    foto = snapshot.child("Imagem").getValue().toString();
+
+                    if (foto.equals("default")) {
+                        Picasso.get().load(R.drawable.profile).into(imagem);
+                    } else
+                        Picasso.get().load(foto).placeholder(R.drawable.profile).into(imagem);
+                    mpessoa_nome.setText(nome);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        };
+        m.addListenerForSingleValueEvent(eventListener);
+
+    }
 
     public void Recuperar_favoritos() {}
 
@@ -195,7 +227,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             intent.putExtra("Categoria Nome", "Eletronicos");
             startActivity(intent);
         }
-        return false;
+        drawerLayout.closeDrawer(GravityCompat.START);
+        return true;
     }
     private void VerificarLogout() {
         AlertDialog.Builder verifiqueAlerta = new AlertDialog.Builder(MainActivity.this);

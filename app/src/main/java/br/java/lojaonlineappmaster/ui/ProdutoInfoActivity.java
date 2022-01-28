@@ -1,12 +1,5 @@
 package br.java.lojaonlineappmaster.ui;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.drawerlayout.widget.DrawerLayout;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
@@ -21,6 +14,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
+
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -34,7 +34,6 @@ import com.squareup.picasso.Picasso;
 import java.util.HashMap;
 
 import br.java.lojaonlineappmaster.R;
-import br.java.lojaonlineappmaster.ui.ui.CarrinhoActivity;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProdutoInfoActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
@@ -326,7 +325,23 @@ public class ProdutoInfoActivity extends AppCompatActivity implements Navigation
         VerificarTotalPrecoZero();
     }
     private void VerificarTotalPrecoZero() {
+        DatabaseReference root = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference m = root.child("carrinho").child(UsuarioId);
 
+        ValueEventListener eventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (!snapshot.exists()) {
+                    FirebaseDatabase.getInstance().getReference().child("carrinho").child(UsuarioId).child("precoTotal").setValue(0);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        };
+        m.addListenerForSingleValueEvent(eventListener);
     }
 
     private void DefinirNavegacao(){
@@ -360,9 +375,8 @@ public class ProdutoInfoActivity extends AppCompatActivity implements Navigation
 
                     if (Imagem.equals("default")) {
                         Picasso.get().load(R.drawable.profile).into(mPessoa_imagem);
-                    } else {
+                    } else
                         Picasso.get().load(Imagem).placeholder(R.drawable.profile).into(mPessoa_imagem);
-                    }
                 }
             }
 
@@ -389,7 +403,7 @@ public class ProdutoInfoActivity extends AppCompatActivity implements Navigation
         } else if (id == R.id.Perfil) {
             startActivity(new Intent(ProdutoInfoActivity.this, UsuarioPerfilActivity.class));
         }
-        return false;
+        return true;
     }
 
     private void AtualizarIconeCarrinho() {
