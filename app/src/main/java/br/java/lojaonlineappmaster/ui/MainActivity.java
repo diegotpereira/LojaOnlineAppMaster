@@ -21,9 +21,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -46,12 +48,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Toolbar mToolBar;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle mtoggle;
-    private CircleImageView image;
     private TextView mpessoa_nome;
     private NavigationView navigationView;
     private ViewPager pager;
     private View mNavigationView;
+
     private DatabaseReference m;
+    private FirebaseAuth mAuth;
+    private FirebaseUser AtualUsuario;
+
     private static List<FavoritaClasse> favoritos;
 
     private RelativeLayout CarrinhoPersonalizadoContainer;
@@ -69,13 +74,37 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+        mAuth = FirebaseAuth.getInstance();
+        AtualUsuario = mAuth.getCurrentUser();
+        Uid = AtualUsuario.getUid();
+
+//        mAuth = FirebaseAuth.getInstance();
+//
+//        FirebaseUser currentUser = mAuth.getCurrentUser();
+//        if(auth.getCurrentUser() != null){
+//            uid = auth.getCurrentUser().getUID();
+//        }
+
+
+//        if(currentUser == null){
+//            Toast.makeText(MainActivity.this, "Authentication failed.",
+//                    Toast.LENGTH_SHORT).show();
+//        }
+//        else{
+//            Toast.makeText(MainActivity.this, "Authentication sucesso.",
+//                    Toast.LENGTH_SHORT).show();
+//        }
+
         navigationView = findViewById(R.id.navegation_view);
         navigationView.setNavigationItemSelectedListener(this);
         mNavigationView = navigationView.getHeaderView(0);
 
+        mpessoa_nome = mNavigationView.findViewById(R.id.pessoanome);
+        imagem = mNavigationView.findViewById(R.id.circimage);
         drawerLayout = findViewById(R.id.drawer);
 
-        Toolbar mToolBar = findViewById(R.id.main_TooBar);
+        mToolBar = findViewById(R.id.main_TooBar);
         setSupportActionBar(mToolBar);
         mtoggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.Abrir, R.string.Fechar);
         drawerLayout.addDrawerListener(mtoggle);

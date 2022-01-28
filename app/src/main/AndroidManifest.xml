@@ -10,29 +10,29 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.ui.CarrinhoActivity"
-            android:exported="false" />
+            android:name=".ui.CarrinhoActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.ProdutoInfoActivity"
-            android:exported="false" />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.CategoriaActivity"
-            android:exported="false" />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.EsqueceuSenhaActivity"
-            android:exported="false" />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.AdminActivity"
-            android:exported="false" />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.RegistrarActivity"
-            android:exported="false" />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.EntrarActivity"
-            android:exported="false" />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.UsuarioPerfilActivity"
-            android:exported="false" />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.MainActivity"
             android:exported="true">
