@@ -124,6 +124,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             startActivity(new Intent(MainActivity.this, UsuarioPerfilActivity.class));
         } else if (id == R.id.Logout) {
             VerificarLogout();
+
+        } else if (id == R.id.eletronicos) {
+            Intent intent = new Intent(MainActivity.this, CategoriaActivity.class);
+            intent.putExtra("Categoria Nome", "Eletronicos");
+            startActivity(intent);
         }
         return false;
     }

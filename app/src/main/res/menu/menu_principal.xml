@@ -23,7 +23,7 @@
             android:title="@string/my_orders" />
 
     </group>
-    <item android:title="Categories">
+    <item android:title="Categorias">
         <menu>
             <item
                 android:id="@+id/fruits"
@@ -36,7 +36,7 @@
                 android:id="@+id/meats"
                 android:title="Carnes" />
             <item
-                android:id="@+id/electronics"
+                android:id="@+id/eletronicos"
                 android:title="Eletrônicos" />
         </menu>
     </item>
