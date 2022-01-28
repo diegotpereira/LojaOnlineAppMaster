@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">LojaOnlineAppMaster</string>
 
-    <string name="Open">Abrir</string>
-    <string name="Close">Fechar</string>
+    <string name="Abrir">Abrir</string>
+    <string name="Fechar">Fechar</string>
     <string name="logout">Sair</string>
     <string name="home">Home</string>
     <string name="profile">Perfil</string>

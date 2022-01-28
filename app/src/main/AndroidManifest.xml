@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".ui.ui.CarrinhoActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.ProdutoInfoActivity"
             android:exported="false" />
         <activity

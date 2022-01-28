@@ -59,7 +59,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/my_cardView"
+                    android:id="@+id/meu_cardView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
@@ -68,7 +68,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/my_cardView2"
+                    android:id="@+id/meu_cardView2"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
@@ -77,7 +77,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/my_cardView3"
+                    android:id="@+id/meu_cardView3"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
@@ -86,7 +86,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/my_cardView4"
+                    android:id="@+id/meu_cardView4"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 

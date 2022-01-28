@@ -17,7 +17,7 @@
         android:gravity="left"/>
 
     <RelativeLayout
-        android:id="@+id/CustomCartIconContainer"
+        android:id="@+id/CarrinhoPersonalizadoContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="end"
@@ -32,7 +32,7 @@
             android:src="@drawable/new_cart"/>
 
         <TextView
-            android:id="@+id/CustomCartNumber"
+            android:id="@+id/CarrinhoPersonalizadoNumero"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/CarrinhoPersonalizadoIcone"
