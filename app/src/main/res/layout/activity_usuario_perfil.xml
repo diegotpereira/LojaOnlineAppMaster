@@ -48,8 +48,9 @@
             app:srcCompat="@drawable/new_camera" />
 
 
-        <include layout="@layout/main2_toolbar"
-            android:id="@+id/UsuarioPerfilToolBar"/>
+        <include
+            android:id="@+id/UsuarioPerfilToolBar"
+            layout="@layout/main2_toolbar" />
 
 
         <RelativeLayout

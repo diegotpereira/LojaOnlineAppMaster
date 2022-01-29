@@ -2,14 +2,17 @@ package br.java.lojaonlineappmaster.ui;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -124,8 +127,7 @@ public class UsuarioPerfilActivity extends AppCompatActivity implements
         DefinirNavegacao();
 
         // Ícone de atualização do carrinho
-
-
+        ExibirIconeDoCarrinho();
     }
 
     @Override
@@ -268,6 +270,30 @@ public class UsuarioPerfilActivity extends AppCompatActivity implements
                         });
                     }
                 });
+            }
+        });
+    }
+    private void ExibirIconeDoCarrinho() {
+        // Toolbar & Icone do carrinho
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayShowHomeEnabled(true);
+
+        LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = inflater.inflate(R.layout.main2_toolbar, null);
+        actionBar.setCustomView(view);
+
+        // itens de ação personalizados xml
+        CarrinhoPersonalizadoContainer = (RelativeLayout) findViewById(R.id.CarrinhoPersonalizadoContainer);
+        PaginaTitulo = (TextView) findViewById(R.id.PaginaTitulo);
+        CarrinhoPersonalizadoNumero = (TextView) findViewById(R.id.CarrinhoPersonalizadoNumero);
+
+        PaginaTitulo.setText("Meu Perfil");
+
+        CarrinhoPersonalizadoContainer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(UsuarioPerfilActivity.this, CategoriaActivity.class));
             }
         });
     }

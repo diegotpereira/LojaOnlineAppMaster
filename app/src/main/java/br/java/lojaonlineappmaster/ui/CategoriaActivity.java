@@ -19,8 +19,11 @@ import android.widget.TextView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -112,8 +115,47 @@ public class CategoriaActivity extends AppCompatActivity implements
     }
 
     private void obterDadosProdutos() {
-        DatabaseReference dataRef = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference mRef = dataRef.child("produto").child(CategoriaNome);
+        DatabaseReference root = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference m = root.child("produto").child(CategoriaNome);
+
+        ValueEventListener valueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                        final String ProdutoNome = dataSnapshot.getKey().toString();
+                        final String ProdutoPreco = dataSnapshot.child("preco").getValue().toString();
+                        final String ProdutoImagem = dataSnapshot.child("imagem").getValue().toString();
+                        final String ProdutoDataVencimento = dataSnapshot.child("vencido").getValue().toString();
+
+                        // verficar favoritos
+                        DatabaseReference root = FirebaseDatabase.getInstance().getReference();
+                        DatabaseReference x = root.child("favoritos").child(UsuarioId).child(ProdutoNome);
+
+                        ValueEventListener vvalueEventListener = new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                if (snapshot.exists()) {
+
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        };
+                        x.addListenerForSingleValueEvent(vvalueEventListener);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        };
+        m.addListenerForSingleValueEvent(valueEventListener);
     }
 
     private void definirNavegacao() {}
