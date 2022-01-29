@@ -10,7 +10,7 @@
         android:id="@+id/Admin_ToolBar"/>
 
     <TextView
-        android:id="@+id/FragmentTitle"
+        android:id="@+id/FragmentoTitulo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=""
@@ -24,7 +24,7 @@
         android:id="@+id/FrameLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/FragmentTitle"
+        android:layout_below="@id/FragmentoTitulo"
         android:layout_above="@id/Bottom_view"/>
 
 

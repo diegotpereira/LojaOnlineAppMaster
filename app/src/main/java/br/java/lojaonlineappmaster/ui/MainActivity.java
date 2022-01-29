@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Recuperar_favoritos();
 
         // Primeira visualização
-//        Recuperar_eletronicos();
+        Recuperar_eletronicos();
 
         // Segunda visualização
         Recuperar_frutas();
