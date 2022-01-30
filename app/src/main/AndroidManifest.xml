@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".ui.AddProdutoActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.CarrinhoActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -28,13 +31,13 @@
             android:name=".ui.RegistrarActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.EntrarActivity"
+            android:name=".ui.MainActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".ui.UsuarioPerfilActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.MainActivity"
+            android:name=".ui.EntrarActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -42,6 +45,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:theme="@style/Base.Theme.AppCompat" />
     </application>
 
 </manifest>

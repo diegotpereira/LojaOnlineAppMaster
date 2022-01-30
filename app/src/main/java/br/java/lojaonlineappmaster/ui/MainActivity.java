@@ -79,23 +79,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         AtualUsuario = mAuth.getCurrentUser();
         Uid = AtualUsuario.getUid();
 
-//        mAuth = FirebaseAuth.getInstance();
-//
-//        FirebaseUser currentUser = mAuth.getCurrentUser();
-//        if(auth.getCurrentUser() != null){
-//            uid = auth.getCurrentUser().getUID();
-//        }
-
-
-//        if(currentUser == null){
-//            Toast.makeText(MainActivity.this, "Authentication failed.",
-//                    Toast.LENGTH_SHORT).show();
-//        }
-//        else{
-//            Toast.makeText(MainActivity.this, "Authentication sucesso.",
-//                    Toast.LENGTH_SHORT).show();
-//        }
-
         navigationView = findViewById(R.id.navegation_view);
         navigationView.setNavigationItemSelectedListener(this);
         mNavigationView = navigationView.getHeaderView(0);
@@ -168,7 +151,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         };
         m.addListenerForSingleValueEvent(eventListener);
-
     }
 
     public void Recuperar_favoritos() {}

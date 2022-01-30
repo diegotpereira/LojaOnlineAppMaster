@@ -14,8 +14,10 @@
         <item>Frutas</item>
         <item>Vegetais</item>
         <item>Carnes</item>
-        <item>Electronicos</item>
+        <item>Eletronicos</item>
     </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
     <!--    <string name="Gmail_web_client_id">467496904796-qnkcblf9s7tia25bmrgp50ed9a0uqfnf.apps.googleusercontent.com</string>-->

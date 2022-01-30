@@ -91,10 +91,10 @@ public class EntrarActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            if (Email.equals("admin@gmail.com") && Password.equals("passwrod")) {
+                            if (Email.equals("admin@gmail.com") && Password.equals("password")) {
 
                                 Toast.makeText(EntrarActivity.this, "Bem vindo meu criador", Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(EntrarActivity.this, MainActivity.class));
+                                startActivity(new Intent(EntrarActivity.this, AdminActivity.class));
                                 finish();
                             } else {
                                 Toast.makeText(EntrarActivity.this, "Conectado com sucesso", Toast.LENGTH_SHORT).show();

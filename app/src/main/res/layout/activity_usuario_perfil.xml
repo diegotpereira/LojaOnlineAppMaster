@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/UserProfileDrawer"
+    android:id="@+id/UsuarioPerfilDrawer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#fff"
@@ -21,7 +21,7 @@
             android:scaleX="1.5"/>
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/UserImage"
+            android:id="@+id/UsuarioImagem"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:src="@drawable/profile"
@@ -30,7 +30,7 @@
             android:layout_marginLeft="10dp"/>
 
         <ProgressBar
-            android:id="@+id/ProfileprogressBar"
+            android:id="@+id/PerfilprogressBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/ProfileCover"
@@ -48,18 +48,19 @@
             app:srcCompat="@drawable/new_camera" />
 
 
-        <include layout="@layout/main2_toolbar"
-            android:id="@+id/UserProfileToolBar"/>
+        <include
+            android:id="@+id/UsuarioPerfilToolBar"
+            layout="@layout/main2_toolbar" />
 
 
         <RelativeLayout
             android:id="@+id/DataContainer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/UserImage">
+            android:layout_below="@id/UsuarioImagem">
 
             <TextView
-                android:id="@+id/UserName"
+                android:id="@+id/UsuarioNome"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:text=""
@@ -72,14 +73,14 @@
                 android:id="@+id/infoText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Info"
-                android:textSize="23dp"
-                android:textColor="#000"
-                android:textStyle="italic"
-                android:layout_below="@id/UserName"
+                android:layout_below="@id/UsuarioNome"
                 android:layout_marginLeft="20dp"
+                android:layout_marginTop="50dp"
                 android:layout_marginBottom="20dp"
-                android:layout_marginTop="50dp"/>
+                android:text="Info"
+                android:textColor="#000"
+                android:textSize="23dp"
+                android:textStyle="italic" />
 
             <ImageView
                 android:id="@+id/EmailIcon"
@@ -93,7 +94,7 @@
                 android:layout_marginRight="10dp"/>
 
             <TextView
-                android:id="@+id/UserEmail"
+                android:id="@+id/UsuarioEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/EmailIcon"
@@ -118,7 +119,7 @@
                 android:layout_marginRight="10dp"/>
 
             <TextView
-                android:id="@+id/UserPhone"
+                android:id="@+id/UsuarioTelefone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/PhoneIcon"
@@ -143,7 +144,7 @@
                 android:layout_marginRight="10dp"/>
 
             <TextView
-                android:id="@+id/UserFavorite"
+                android:id="@+id/UsuarioFavorito"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/PhoneIcon"
@@ -167,7 +168,7 @@
                 android:layout_marginRight="10dp"/>
 
             <TextView
-                android:id="@+id/UserOrders"
+                android:id="@+id/UsuarioPerdidos"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/PhoneIcon"
@@ -229,7 +230,7 @@
     </RelativeLayout>
 
     <com.google.android.material.navigation.NavigationView
-        android:id="@+id/UserProfileNavigation"
+        android:id="@+id/UsuarioPerfilNavigation"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:background="#FFF7DA"
