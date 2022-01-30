@@ -73,7 +73,8 @@ public class GridProdutoAdapter extends BaseAdapter {
 
             boolean ehFavorito = false;
             for(int index = 0; index < favoritos.size(); index++) {
-                if (horizontalProdutoModelLista.get(position).getProdutoTitulo().equals(favoritos.get(index).getProdutoTitulo())) {
+                if (horizontalProdutoModelLista.get(position).getProdutoTitulo()
+                        .equals(favoritos.get(index).getProdutoTitulo())) {
                     ehFavorito = true;
 
                     horizontalProdutoModelLista.get(position).setVerificado(true);

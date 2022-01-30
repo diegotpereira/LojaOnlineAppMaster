@@ -97,7 +97,7 @@ public class AdminActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.adminSairId) {
-
+            VerificarLogout();
         }
         return super.onOptionsItemSelected(item);
     }
