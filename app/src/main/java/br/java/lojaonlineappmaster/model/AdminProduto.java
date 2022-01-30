@@ -4,7 +4,7 @@ public class AdminProduto {
 
     private String nome;
     private String categoria;
-    private String datavencimento;
+    private String dataVencimento;
     private String imagem;
     private String preco;
     private String quantidade;
@@ -12,10 +12,11 @@ public class AdminProduto {
     public AdminProduto() {
     }
 
-    public AdminProduto(String nome, String categoria, String datavencimento, String imagem, String preco, String quantidade) {
+    public AdminProduto(String nome, String categoria, String dataVencimento, String imagem,
+                        String preco, String quantidade) {
         this.nome = nome;
         this.categoria = categoria;
-        this.datavencimento = datavencimento;
+        this.dataVencimento = dataVencimento;
         this.imagem = imagem;
         this.preco = preco;
         this.quantidade = quantidade;
@@ -37,12 +38,12 @@ public class AdminProduto {
         this.categoria = categoria;
     }
 
-    public String getDatavencimento() {
-        return datavencimento;
+    public String getDataVencimento() {
+        return dataVencimento;
     }
 
-    public void setDatavencimento(String datavencimento) {
-        this.datavencimento = datavencimento;
+    public void setDataVencimento(String dataVencimento) {
+        this.dataVencimento = dataVencimento;
     }
 
     public String getImagem() {

@@ -23,9 +23,9 @@ import br.java.lojaonlineappmaster.model.AdminProduto;
 public class AdminProdutoAdapter extends RecyclerView.Adapter<AdminProdutoAdapter.ProdutoViewHolder> {
 
     private Context context;
+    private List<AdminProduto> adminProdutos;
     private AdminOfertaAdapter.onItemClickListener itemListener;
     private AdminOfertaAdapter.onLongClickListener longListener;
-    private List<AdminProduto> adminProdutos;
 
     // no Ouvinte de cliques do item
     public interface onItemClickListener {
@@ -49,7 +49,7 @@ public class AdminProdutoAdapter extends RecyclerView.Adapter<AdminProdutoAdapte
         this.adminProdutos = adminProdutos;
     }
 
-    public void addLista(List<AdminProduto> lista) {
+    public void addList(List<AdminProduto> lista) {
         adminProdutos.clear();
         Collections.copy(adminProdutos, lista);
         this.notifyDataSetChanged();
@@ -75,16 +75,16 @@ public class AdminProdutoAdapter extends RecyclerView.Adapter<AdminProdutoAdapte
         holder.quantidade.setText("Quantidade Disponivél: " + adminProdutos.get(position).getQuantidade());
         holder.preco.setText("Preço: " + adminProdutos.get(position).getPreco() + " EGP");
 
-        if (adminProdutos.get(position).getDatavencimento().equalsIgnoreCase("null")) holder.datavencimento.setVisibility(View.GONE);
-        else holder.datavencimento.setVisibility(View.VISIBLE);
+        if (adminProdutos.get(position).getDataVencimento().equalsIgnoreCase("null"))
+            holder.dataVencimento.setVisibility(View.GONE);
+        else holder.dataVencimento.setVisibility(View.VISIBLE);
 
-        holder.datavencimento.setText("Data de Vencimento: " + adminProdutos.get(position).getDatavencimento());
+        holder.dataVencimento.setText("Data de Vencimento: " + adminProdutos.get(position).getDataVencimento());
     }
 
     @Override
     public int getItemCount() {
-//        return adminProdutos.size();
-        return 0;
+        return adminProdutos.size();
     }
 
 
@@ -95,7 +95,7 @@ public class AdminProdutoAdapter extends RecyclerView.Adapter<AdminProdutoAdapte
         TextView categoria;
         TextView quantidade;
         TextView preco;
-        TextView datavencimento;
+        TextView dataVencimento;
         CardView cardView;
 
         public ProdutoViewHolder(@NonNull View itemView,
@@ -107,7 +107,7 @@ public class AdminProdutoAdapter extends RecyclerView.Adapter<AdminProdutoAdapte
             categoria = itemView.findViewById(R.id.adapterProdutoCategoria);
             quantidade = itemView.findViewById(R.id.AdapterProdutoQuantidade);
             preco = itemView.findViewById(R.id.adapterProdutoPreco);
-            datavencimento = itemView.findViewById(R.id.adapterProdutoDataVencimento);
+            dataVencimento = itemView.findViewById(R.id.adapterProdutoDataVencimento);
             cardView = itemView.findViewById(R.id.ProductCardView);
 
             itemView.setOnClickListener(new View.OnClickListener() {

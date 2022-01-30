@@ -21,7 +21,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import br.java.lojaonlineappmaster.Adapter.AdminOfertaAdapter;
@@ -80,6 +83,9 @@ public class ProdutosFragmento extends Fragment {
         bar = view.findViewById(R.id.productProgressBar);
 
         mDataBaseRef = FirebaseDatabase.getInstance().getReference("produto");
+        adminProdutos = new ArrayList<>();
+
+
         adapter = new AdminProdutoAdapter(getActivity(), adminProdutos);
 
         ProdutosRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -88,7 +94,7 @@ public class ProdutosFragmento extends Fragment {
         mDataBaseRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                adminProdutos.clear();
+                adminProdutos.clear();
 
                 // Categoria
                 for(DataSnapshot snapshot1:snapshot.getChildren()) {
@@ -97,7 +103,7 @@ public class ProdutosFragmento extends Fragment {
                     for (DataSnapshot snapshot2: snapshot1.getChildren()) {
                         adminProdutos.add(new AdminProduto(snapshot2.getKey(),
                                 snapshot1.getKey(),
-                                snapshot2.child("data vencimento").getValue(String.class),
+                                snapshot2.child("dataVencimento").getValue(String.class),
                                 snapshot2.child("imagem").getValue(String.class),
                                 snapshot2.child("preco").getValue(String.class),
                                 snapshot2.child("quantidade").getValue(String.class)));
@@ -133,6 +139,16 @@ public class ProdutosFragmento extends Fragment {
                                 DatabaseReference reference = mDataBaseRef
                                         .child(adminProdutos.get(pos).getCategoria())
                                         .child(adminProdutos.get(pos).getNome());
+                                reference.removeValue();
+
+                                StorageReference z =  FirebaseStorage.getInstance()
+                                        .getReference("ofertas").child(adminProdutos.get(pos).getNome() + ".jpg");
+                                z.delete();
+
+                                StorageReference x =  FirebaseStorage.getInstance()
+                                        .getReference("ofertas").child(adminProdutos.get(pos).getNome());
+                                x.delete();
+
                             }
                         }).setNegativeButton("Não", new DialogInterface.OnClickListener() {
                             @Override

@@ -4,14 +4,14 @@ public class Produto {
 
     public String quantidade;
     public String preco;
-    public String vencimento;
+    public String dataVencimento;
     public String imagem;
 
     public Produto(String quantidade, String preco,
-                   String vencimento, String imagem) {
+                   String dataVencimento, String imagem) {
         this.quantidade = quantidade;
         this.preco = preco;
-        this.vencimento = vencimento;
+        this.dataVencimento = dataVencimento;
         this.imagem = imagem;
     }
 }
