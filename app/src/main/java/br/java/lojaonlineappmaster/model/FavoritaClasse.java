@@ -2,6 +2,7 @@ package br.java.lojaonlineappmaster.model;
 
 public class FavoritaClasse {
 
+    private String produtoImagem;
     private String produtoTitulo;
     private String produtoPreco;
     private boolean verificado;
@@ -9,10 +10,19 @@ public class FavoritaClasse {
     public FavoritaClasse() {
     }
 
-    public FavoritaClasse(String produtoTitulo, String produtoPreco, boolean verificado) {
+    public FavoritaClasse(String produtoImagem, String produtoTitulo, String produtoPreco, boolean verificado) {
+        this.produtoImagem = produtoImagem;
         this.produtoTitulo = produtoTitulo;
         this.produtoPreco = produtoPreco;
         this.verificado = verificado;
+    }
+
+    public String getProdutoImagem() {
+        return produtoImagem;
+    }
+
+    public void setProdutoImagem(String produtoImagem) {
+        this.produtoImagem = produtoImagem;
     }
 
     public String getProdutoTitulo() {

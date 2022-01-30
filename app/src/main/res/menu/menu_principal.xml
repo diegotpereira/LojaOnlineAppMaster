@@ -10,15 +10,15 @@
             android:icon="@drawable/profile_icon"
             android:title="@string/profile" />
         <item
-            android:id="@+id/favourites"
+            android:id="@+id/Favoritos"
             android:icon="@drawable/ic_baseline_favorite_24"
             android:title="@string/favorites" />
         <item
-            android:id="@+id/Cart"
+            android:id="@+id/Carrinho"
             android:icon="@drawable/ic_baseline_shopping_cart_24"
             android:title="@string/cart" />
         <item
-            android:id="@+id/MyOrders"
+            android:id="@+id/MeusPedidos"
             android:icon="@drawable/ic_baseline_my_orders_24"
             android:title="@string/my_orders" />
 
@@ -26,24 +26,24 @@
     <item android:title="Categorias">
         <menu>
             <item
-                android:id="@+id/fruits"
+                android:id="@+id/Frutas"
                 android:title="Frutas" />
             <item
-                android:id="@+id/vegetables"
+                android:id="@+id/Vegetais"
                 android:title="Vegetais" />
 
             <item
-                android:id="@+id/meats"
+                android:id="@+id/Carnes"
                 android:title="Carnes" />
             <item
-                android:id="@+id/eletronicos"
+                android:id="@+id/Eletronicos"
                 android:title="Eletrônicos" />
         </menu>
     </item>
     <item android:title="@string/logout">
         <menu>
             <item
-                android:id="@+id/Logout"
+                android:id="@+id/Sair"
                 android:icon="@drawable/ic_baseline_exit_to_app_24"
                 android:title="@string/logout" />
         </menu>

@@ -2,7 +2,7 @@ package br.java.lojaonlineappmaster.model;
 
 public class Usuario {
 
-    private String expirado;
+    private String dataVencimento;
     private String imagem;
     private String preco;
     private String quantidade;
@@ -11,20 +11,20 @@ public class Usuario {
     public Usuario() {
     }
 
-    public Usuario(String expirado, String imagem, String preco, String quantidade, String categoria) {
-        this.expirado = expirado;
+    public Usuario(String dataVencimento, String imagem, String preco, String quantidade, String categoria) {
+        this.dataVencimento = dataVencimento;
         this.imagem = imagem;
         this.preco = preco;
         this.quantidade = quantidade;
         this.categoria = categoria;
     }
 
-    public String getExpirado() {
-        return expirado;
+    public String getDataVencimento() {
+        return dataVencimento;
     }
 
-    public void setExpirado(String expirado) {
-        this.expirado = expirado;
+    public void setDataVencimento(String dataVencimento) {
+        this.dataVencimento = dataVencimento;
     }
 
     public String getImagem() {

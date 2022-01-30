@@ -6,10 +6,7 @@ public class HorizontalProdutoModel {
     private String produtoTitulo;
     private String produtoPreco;
     private boolean verificado;
-    private String DataVencimento;
-
-    public HorizontalProdutoModel() {
-    }
+    private String dataVencimento;
 
     public HorizontalProdutoModel(String produtoImagem, String produtoTitulo, String produtoPreco,
                                   boolean verificado, String dataVencimento) {
@@ -17,7 +14,7 @@ public class HorizontalProdutoModel {
         this.produtoTitulo = produtoTitulo;
         this.produtoPreco = produtoPreco;
         this.verificado = verificado;
-        DataVencimento = dataVencimento;
+        this.dataVencimento = dataVencimento;
     }
 
     public String getProdutoImagem() {
@@ -53,10 +50,10 @@ public class HorizontalProdutoModel {
     }
 
     public String getDataVencimento() {
-        return DataVencimento;
+        return dataVencimento;
     }
 
     public void setDataVencimento(String dataVencimento) {
-        DataVencimento = dataVencimento;
+        dataVencimento = dataVencimento;
     }
 }

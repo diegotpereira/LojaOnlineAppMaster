@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".ui.FavoritosActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.AddProdutoActivity"
             android:exported="false" />
         <activity

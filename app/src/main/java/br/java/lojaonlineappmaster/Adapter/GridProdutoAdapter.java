@@ -42,7 +42,10 @@ public class GridProdutoAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return 4;
+        if (horizontalProdutoModelLista == null) {
+            return 0;
+        }
+        return horizontalProdutoModelLista.size();
     }
 
     @Override
@@ -67,14 +70,24 @@ public class GridProdutoAdapter extends BaseAdapter {
             produtoPreco = view.findViewById(R.id.item_preco);
             checkBox = view.findViewById(R.id.check_box);
 
-            Picasso.get().load(horizontalProdutoModelLista.get(position).getProdutoImagem()).into(produtoImagem);
+            try {
+                Picasso.get().load(horizontalProdutoModelLista.get(position).getProdutoImagem())
+                        .into(produtoImagem);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+
+
             produtoTitulo.setText(horizontalProdutoModelLista.get(position).getProdutoTitulo());
             produtoPreco.setText("EGP " + horizontalProdutoModelLista.get(position).getProdutoPreco());
 
             boolean ehFavorito = false;
+
             for(int index = 0; index < favoritos.size(); index++) {
                 if (horizontalProdutoModelLista.get(position).getProdutoTitulo()
                         .equals(favoritos.get(index).getProdutoTitulo())) {
+
                     ehFavorito = true;
 
                     horizontalProdutoModelLista.get(position).setVerificado(true);
@@ -117,9 +130,9 @@ public class GridProdutoAdapter extends BaseAdapter {
                 intent.putExtra("Produto Nome", horizontalProdutoModelLista.get(position).getProdutoTitulo());
                 intent.putExtra("Produto Preço", horizontalProdutoModelLista.get(position).getProdutoPreco());
                 intent.putExtra("Produto Imagem", horizontalProdutoModelLista.get(position).getProdutoImagem());
-                intent.putExtra("Produto Data de Vencimento", horizontalProdutoModelLista.get(position).getDataVencimento());
+                intent.putExtra("Produto Data Vencimento", horizontalProdutoModelLista.get(position).getDataVencimento());
                 intent.putExtra("Produto Favorito", String.valueOf(horizontalProdutoModelLista.get(position).isVerificado()));
-                intent.putExtra("É ofertado", "não");
+                intent.putExtra("Eh Oferecido", "não");
 
                 context.startActivity(intent);
             }

@@ -104,7 +104,7 @@ public class ProdutoInfoActivity extends AppCompatActivity implements Navigation
         ProdutoImagem = getIntent().getStringExtra("Produto Imagem");
         ProdutoDataVencimento = getIntent().getStringExtra("Produto Data Vencimento");
         ProdutoEhFavorito = getIntent().getStringExtra("Produto Favorito");
-        EhOferecido = getIntent().getStringExtra("É Oferecido");
+        EhOferecido = getIntent().getStringExtra("Eh Oferecido");
 
         // definir dados xml
         DefinirXmlViews();
@@ -237,18 +237,20 @@ public class ProdutoInfoActivity extends AppCompatActivity implements Navigation
                     ProdutoEhFavorito = "false";
 
                     // Deletar Favoritos do database
-                    DatabaseReference x = FirebaseDatabase.getInstance().getReference().child("favoritos").child(UsuarioId);
+                    DatabaseReference x = FirebaseDatabase.getInstance().getReference()
+                            .child("favoritos").child(UsuarioId);
                     x.child(ProdutoNome).removeValue();
                 } else {
                     PIsFav.setImageResource(R.drawable.ic_baseline_favorite_24);
                     ProdutoEhFavorito = "true";
 
                     // Salvar favoritos no banco
-                    DatabaseReference x = FirebaseDatabase.getInstance().getReference().child("favoritos").child(UsuarioId).child(ProdutoNome);
+                    DatabaseReference x = FirebaseDatabase.getInstance().getReference()
+                            .child("favoritos").child(UsuarioId).child(ProdutoNome);
                     x.child("verificado").setValue(true);
-                    x.child("produtoimagem").setValue(ProdutoImagem);
-                    x.child("produtopreco").setValue("EGP " + ProdutoPreco);
-                    x.child("produtotitulo").setValue(ProdutoNome);
+                    x.child("ProdutoImagem").setValue(ProdutoImagem);
+                    x.child("ProdutoPreco").setValue("EGP " + ProdutoPreco);
+                    x.child("produtoTitulo").setValue(ProdutoNome);
                 }
             }
         });
@@ -290,7 +292,7 @@ public class ProdutoInfoActivity extends AppCompatActivity implements Navigation
                 x.child(ProdutoNome).setValue(hashMap);
 
                 // Ícone de atualização do carrinho
-                AtualizarIconeCarrinho();
+                exibirIconeDoCarrinho();
             }
         });
         DeletarDoCarrinhoContainer.setOnClickListener(new View.OnClickListener() {
@@ -305,7 +307,7 @@ public class ProdutoInfoActivity extends AppCompatActivity implements Navigation
                 Toast.makeText(ProdutoInfoActivity.this, "O produto foi excluído com sucesso do seu carrinho", Toast.LENGTH_SHORT).show();
 
                 // Ícone de atualização do carrinho
-                AtualizarIconeCarrinho();
+                exibirIconeDoCarrinho();
             }
         });
     }
@@ -317,7 +319,7 @@ public class ProdutoInfoActivity extends AppCompatActivity implements Navigation
         DefinirNavegacao();
 
         // Ícone de atualização do carrinho
-        AtualizarIconeCarrinho();
+        exibirIconeDoCarrinho();
 
         AtualizarContainer();
 
@@ -406,7 +408,7 @@ public class ProdutoInfoActivity extends AppCompatActivity implements Navigation
         return true;
     }
 
-    private void AtualizarIconeCarrinho() {
+    private void exibirIconeDoCarrinho() {
         // Toolbar & CarrinhoIcone
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);

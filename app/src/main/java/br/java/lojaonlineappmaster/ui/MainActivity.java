@@ -1,6 +1,7 @@
 package br.java.lojaonlineappmaster.ui;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,6 +10,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -60,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private static List<FavoritaClasse> favoritos;
 
     private RelativeLayout CarrinhoPersonalizadoContainer;
+    private TextView CarrinhoPersonalizadoNumero;
     private TextView PaginaTitulo;
     private ImageView CarrinhoPersonalizadoIcone;
 
@@ -121,7 +124,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Recuperar_ofertas();
 
         // Ícone de atualização do carrinho
-        exibirIconeCarrinho();
+        exibirIconeDoCarrinho();
 
         // para verificar se o preço total é zero ou não
         verificarPrecoTotalZero();
@@ -153,7 +156,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         m.addListenerForSingleValueEvent(eventListener);
     }
 
-    public void Recuperar_favoritos() {}
+    public void Recuperar_favoritos() {
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("favoritos")
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+//
+        favoritos = new ArrayList<>();
+
+        ValueEventListener valueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot ds : snapshot.getChildren()) {
+                    FavoritaClasse fav = new FavoritaClasse();
+                    fav = ds.getValue(FavoritaClasse.class);
+                    favoritos.add(fav);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        };
+        ref.addListenerForSingleValueEvent(valueEventListener);
+    }
 
     public void Recuperar_eletronicos() {
         LinearLayout meuLayout = (LinearLayout) findViewById(R.id.meu_cardView);
@@ -182,7 +207,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     meu_usuario = ds.getValue(Usuario.class);
                     meu_usuario.setCategoria(ds.getKey().toString());
                     ultimosModelos.add(new HorizontalProdutoModel(meu_usuario.getImagem(),
-                            meu_usuario.getCategoria(), meu_usuario.getPreco(), false, meu_usuario.getExpirado()));
+                            meu_usuario.getCategoria(), meu_usuario.getPreco(), false,
+                            meu_usuario.getDataVencimento()));
                 }
                 gv.setAdapter(meu_adapter);
             }
@@ -212,9 +238,28 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public void Recuperar_ofertas() {}
 
-    public void exibirIconeCarrinho() {
+    private  void exibirIconeDoCarrinho() {
+        // Toolbar & Carrinho icone
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(false);
+        actionBar.setDisplayShowCustomEnabled(true);
+
+        LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = inflater.inflate(R.layout.main2_toolbar, null);
+        actionBar.setCustomView(view);
 
         CarrinhoPersonalizadoContainer = (RelativeLayout) findViewById(R.id.CarrinhoPersonalizadoContainer);
+        PaginaTitulo = (TextView) findViewById(R.id.PaginaTitulo);
+        CarrinhoPersonalizadoNumero = (TextView)findViewById(R.id.CarrinhoPersonalizadoNumero);
+
+        PaginaTitulo.setText("Favoritos");
+
+        CarrinhoPersonalizadoContainer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, CarrinhoActivity.class));
+            }
+        });
     }
 
     public void verificarPrecoTotalZero(){}
@@ -230,10 +275,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
         if (id == R.id.Perfil) {
             startActivity(new Intent(MainActivity.this, UsuarioPerfilActivity.class));
-        } else if (id == R.id.Logout) {
+        } else if (id == R.id.Sair) {
             VerificarLogout();
 
-        } else if (id == R.id.eletronicos) {
+        } else if (id == R.id.Eletronicos) {
             Intent intent = new Intent(MainActivity.this, CategoriaActivity.class);
             intent.putExtra("Categoria Nome", "Eletronicos");
             startActivity(intent);

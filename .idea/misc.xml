@@ -22,11 +22,13 @@
         <entry key="..\:/Users/administrator/AndroidStudioProjects/LojaOnlineAppMaster/app/src/main/res/menu/menu_principal.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/diego/AndroidStudioProjects/LojaOnlineAppMaster/app/src/main/res/layout/activity_add_produto.xml" value="0.264" />
         <entry key="..\:/Users/diego/AndroidStudioProjects/LojaOnlineAppMaster/app/src/main/res/layout/activity_admin.xml" value="0.15416666666666667" />
+        <entry key="..\:/Users/diego/AndroidStudioProjects/LojaOnlineAppMaster/app/src/main/res/layout/activity_favoritos.xml" value="0.1" />
         <entry key="..\:/Users/diego/AndroidStudioProjects/LojaOnlineAppMaster/app/src/main/res/layout/activity_main.xml" value="0.12708333333333333" />
         <entry key="..\:/Users/diego/AndroidStudioProjects/LojaOnlineAppMaster/app/src/main/res/layout/activity_produto_info.xml" value="0.1578125" />
         <entry key="..\:/Users/diego/AndroidStudioProjects/LojaOnlineAppMaster/app/src/main/res/layout/activity_usuario_perfil.xml" value="0.264" />
         <entry key="..\:/Users/diego/AndroidStudioProjects/LojaOnlineAppMaster/app/src/main/res/layout/admin_opcoes_lista.xml" value="0.4" />
         <entry key="..\:/Users/diego/AndroidStudioProjects/LojaOnlineAppMaster/app/src/main/res/layout/admin_produto_lista.xml" value="0.25" />
+        <entry key="..\:/Users/diego/AndroidStudioProjects/LojaOnlineAppMaster/app/src/main/res/layout/favorito_recycler_view.xml" value="0.1" />
         <entry key="..\:/Users/diego/AndroidStudioProjects/LojaOnlineAppMaster/app/src/main/res/layout/fragmento_ofertas.xml" value="0.25" />
         <entry key="..\:/Users/diego/AndroidStudioProjects/LojaOnlineAppMaster/app/src/main/res/layout/fragmento_produtos.xml" value="0.25" />
         <entry key="..\:/Users/diego/AndroidStudioProjects/LojaOnlineAppMaster/app/src/main/res/layout/main2_toolbar.xml" value="0.4" />
