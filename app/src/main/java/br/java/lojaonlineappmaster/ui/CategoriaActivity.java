@@ -79,8 +79,9 @@ public class CategoriaActivity extends AppCompatActivity implements
                 intent.putExtra("Produto Nome", produto.getProdutoNome());
                 intent.putExtra("Produto Preço", produto.getProdutoPreco());
                 intent.putExtra("Produto Imagem", produto.getProdutoImagem());
-                intent.putExtra("Produto Data de Vencimento", produto.getProdutoDataVencimento());
-                intent.putExtra("Produto é seu favorito?", String.valueOf(produto.isEhFavorito()));
+                intent.putExtra("Produto Data Vencimento", produto.getProdutoDataVencimento());
+                intent.putExtra("Produto EhFavorito", String.valueOf(produto.isEhFavorito()));
+                intent.putExtra("Eh Oferecido", "Não");
             }
         };
     }

@@ -103,7 +103,7 @@ public class ProdutoInfoActivity extends AppCompatActivity implements Navigation
         ProdutoPreco = getIntent().getStringExtra("Produto Preço");
         ProdutoImagem = getIntent().getStringExtra("Produto Imagem");
         ProdutoDataVencimento = getIntent().getStringExtra("Produto Data Vencimento");
-        ProdutoEhFavorito = getIntent().getStringExtra("Produto Favorito");
+        ProdutoEhFavorito = getIntent().getStringExtra("Produto EhFavorito");
         EhOferecido = getIntent().getStringExtra("Eh Oferecido");
 
         // definir dados xml

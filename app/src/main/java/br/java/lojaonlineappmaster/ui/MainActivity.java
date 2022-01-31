@@ -42,6 +42,8 @@ import br.java.lojaonlineappmaster.Adapter.GridProdutoAdapter;
 import br.java.lojaonlineappmaster.R;
 import br.java.lojaonlineappmaster.model.FavoritaClasse;
 import br.java.lojaonlineappmaster.model.HorizontalProdutoModel;
+import br.java.lojaonlineappmaster.model.Modelo;
+import br.java.lojaonlineappmaster.model.Ofertas;
 import br.java.lojaonlineappmaster.model.Usuario;
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -54,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private NavigationView navigationView;
     private ViewPager pager;
     private View mNavigationView;
+    private List<Modelo> modelos;
 
     private DatabaseReference m;
     private FirebaseAuth mAuth;
@@ -118,10 +121,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         RecuperarCarnes();
 
         // Quarta visualização
-        Recuperar_vegetais();
+        RecuperarVegetais();
 
         // OFERTAS
-        Recuperar_ofertas();
+        RecuperarOfertas();
 
         // Ícone de atualização do carrinho
         ExibirIconeDoCarrinho();
@@ -159,7 +162,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void RecuperarFavoritos() {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("favoritos")
                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
-//
+
         favoritos = new ArrayList<>();
 
         ValueEventListener valueEventListener = new ValueEventListener() {
@@ -281,12 +284,137 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void RecuperarCarnes() {
+        LinearLayout meuLayout = (LinearLayout) findViewById(R.id.meu_cardView3);
+        LayoutInflater inflater = getLayoutInflater();
+        inflater.inflate(R.layout.grid_produto_layout, meuLayout, false);
 
+        TextView gridLayoutTitulo = meuLayout.findViewById(R.id.grid_produto_layout_textview);
+        gridLayoutTitulo.setText("Carnes");
+
+        Button GridLayoutViewBtn = meuLayout.findViewById(R.id.grid_button_layout_viewall_button);
+
+        final GridView gv = meuLayout.findViewById(R.id.produto_layout_gridview);
+        final List<HorizontalProdutoModel> ultimosModelos = new ArrayList<>();
+
+        final GridProdutoAdapter meu_adapter;
+        meu_adapter = new GridProdutoAdapter(ultimosModelos, favoritos, MainActivity.this);
+
+        m = FirebaseDatabase.getInstance().getReference().child("produto").child("Carnes");
+
+        ValueEventListener eventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot ds : snapshot.getChildren()) {
+                    Usuario meu_usuario = new Usuario();
+                    meu_usuario = ds.getValue(Usuario.class);
+                    meu_usuario.setCategoria(ds.getKey().toString());
+
+                    ultimosModelos.add(new HorizontalProdutoModel(meu_usuario.getImagem(),
+                            meu_usuario.getCategoria(),
+                            meu_usuario.getPreco(),
+                            false,
+                            meu_usuario.getDataVencimento()));
+                }
+                gv.setAdapter(meu_adapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        };
+        m.addListenerForSingleValueEvent(eventListener);
+
+        GridLayoutViewBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, CategoriaActivity.class);
+                intent.putExtra("!Categoria Nome", "Carnes");
+                startActivity(intent);
+            }
+        });
     }
 
-    public void Recuperar_vegetais() {}
+    public void RecuperarVegetais() {
+        LinearLayout meuLayout = (LinearLayout) findViewById(R.id.meu_cardView4);
+        LayoutInflater inflater = getLayoutInflater();
+        inflater.inflate(R.layout.grid_produto_layout, meuLayout, false);
 
-    public void Recuperar_ofertas() {}
+        TextView grigLayoutTitulo = meuLayout.findViewById(R.id.grid_produto_layout_textview);
+        grigLayoutTitulo.setText("Vegetais");
+
+        Button GridLayoutViewBtn = meuLayout.findViewById(R.id.grid_button_layout_viewall_button);
+
+        final GridView gv = meuLayout.findViewById(R.id.produto_layout_gridview);
+        final List<HorizontalProdutoModel> ultimosModelos = new ArrayList<>();
+
+        final GridProdutoAdapter meu_adapter;
+        meu_adapter = new GridProdutoAdapter(ultimosModelos, favoritos, MainActivity.this);
+
+        m = FirebaseDatabase.getInstance().getReference().child("produto").child("Vegetais");
+
+        ValueEventListener eventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot ds : snapshot.getChildren()) {
+                    Usuario meu_usuario = new Usuario();
+                    meu_usuario = ds.getValue(Usuario.class);
+                    meu_usuario.setCategoria(ds.getKey().toString());
+                    ultimosModelos.add(new HorizontalProdutoModel(meu_usuario.getImagem(),
+                            meu_usuario.getCategoria(),
+                            meu_usuario.getPreco(),
+                            false,
+                            meu_usuario.getDataVencimento()));
+                }
+                gv.setAdapter(meu_adapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        };
+        m.addListenerForSingleValueEvent(eventListener);
+
+        GridLayoutViewBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, CategoriaActivity.class);
+                intent.putExtra("Categoria Nome", "Vegetais");
+                startActivity(intent);
+            }
+        });
+    }
+
+    public void RecuperarOfertas() {
+        DatabaseReference root = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference m = root.child("ofertas");
+
+        modelos = new ArrayList<>();
+
+        ValueEventListener eventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot ds : snapshot.getChildren()) {
+                    Ofertas ofertas = new Ofertas();
+                    ofertas = ds.getValue(Ofertas.class);
+                    ofertas.setTitulo(ds.getValue().toString());
+
+                    modelos.add(new Modelo(
+                            ofertas.getImg(),
+                            ofertas.getTitulo(),
+                            ofertas.getDescricao()));
+
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        };
+    }
 
 
 
