@@ -277,7 +277,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, CategoriaActivity.class);
-                intent.putExtra("Categoria", "Frutas");
+                intent.putExtra("Categoria Nome", "Frutas");
                 startActivity(intent);
             }
         });
@@ -329,7 +329,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, CategoriaActivity.class);
-                intent.putExtra("!Categoria Nome", "Carnes");
+                intent.putExtra("Categoria Nome", "Carnes");
                 startActivity(intent);
             }
         });
@@ -427,6 +427,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
+
         if (id == R.id.Perfil) {
             startActivity(new Intent(MainActivity.this, UsuarioPerfilActivity.class));
         } else if (id == R.id.MeusPedidos) {
@@ -434,22 +435,29 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.Carrinho) {
             startActivity(new Intent(MainActivity.this, CarrinhoActivity.class));
         } else if (id == R.id.Frutas) {
-            startActivity(new Intent(MainActivity.this, CategoriaActivity.class));
+            Intent intent = new Intent(MainActivity.this, CategoriaActivity.class);
+            intent.putExtra("Categoria Nome", "Frutas");
+            startActivity(intent);
         } else if (id == R.id.Vegetais) {
-            startActivity(new Intent(MainActivity.this, CategoriaActivity.class));
+            Intent intent = new Intent(MainActivity.this, CategoriaActivity.class);
+            intent.putExtra("Categoria Nome", "Vegetais");
+            startActivity(intent);
         } else if (id == R.id.Carnes) {
-            startActivity(new Intent(MainActivity.this, CategoriaActivity.class));
-        } else if (id == R.id.Sair) {
-            VerificarLogout();
-
+            Intent intent = new Intent(MainActivity.this, CategoriaActivity.class);
+            intent.putExtra("Categoria Nome", "Carnes");
+            startActivity(intent);
         } else if (id == R.id.Eletronicos) {
             Intent intent = new Intent(MainActivity.this, CategoriaActivity.class);
             intent.putExtra("Categoria Nome", "Eletronicos");
             startActivity(intent);
+        } else if (id == R.id.Sair) {
+            VerificarLogout();
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
     private void VerificarLogout() {
         AlertDialog.Builder verifiqueAlerta = new AlertDialog.Builder(MainActivity.this);
         verifiqueAlerta.setMessage("Deseja sair?")

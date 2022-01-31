@@ -1,6 +1,7 @@
 package br.java.lojaonlineappmaster.ui;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
@@ -17,8 +18,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
@@ -324,6 +327,9 @@ public class ProdutoInfoActivity extends AppCompatActivity implements Navigation
 
         // para verificar se o preço total é zero ou não
         VerificarTotalPrecoZero();
+
+        // para verificar se o preço total é zero ou não
+        verificarPrecoTotalZero();
     }
     private void VerificarTotalPrecoZero() {
         DatabaseReference root = FirebaseDatabase.getInstance().getReference();
@@ -396,15 +402,61 @@ public class ProdutoInfoActivity extends AppCompatActivity implements Navigation
     }
 
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        int id = menuItem.getItemId();
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
 
-        if (id == R.id.Home) {
-            startActivity(new Intent(ProdutoInfoActivity.this, MainActivity.class));
-        } else if (id == R.id.Perfil) {
-            startActivity(new Intent(ProdutoInfoActivity.this, UsuarioPerfilActivity.class));
+        if(id==R.id.Home){
+            startActivity(new Intent(ProdutoInfoActivity.this,MainActivity.class));
         }
+        if (id == R.id.Perfil) {
+            startActivity(new Intent(ProdutoInfoActivity.this, UsuarioPerfilActivity.class));
+        } else if (id == R.id.MeusPedidos) {
+            startActivity(new Intent(ProdutoInfoActivity.this, CategoriaActivity.class));
+        } else if (id == R.id.Carrinho) {
+            startActivity(new Intent(ProdutoInfoActivity.this, CarrinhoActivity.class));
+        } else if (id == R.id.Frutas) {
+            Intent intent = new Intent(ProdutoInfoActivity.this, CategoriaActivity.class);
+            intent.putExtra("Categoria Nome", "Frutas");
+            startActivity(intent);
+        } else if (id == R.id.Vegetais) {
+            Intent intent = new Intent(ProdutoInfoActivity.this, CategoriaActivity.class);
+            intent.putExtra("Categoria Nome", "Vegetais");
+            startActivity(intent);
+        } else if (id == R.id.Carnes) {
+            Intent intent = new Intent(ProdutoInfoActivity.this, CategoriaActivity.class);
+            intent.putExtra("Categoria Nome", "Carnes");
+            startActivity(intent);
+        } else if (id == R.id.Eletronicos) {
+            Intent intent = new Intent(ProdutoInfoActivity.this, CategoriaActivity.class);
+            intent.putExtra("Categoria Nome", "Eletronicos");
+            startActivity(intent);
+        } else if (id == R.id.Sair) {
+            VerificarLogout();
+        }
+        drawerLayout.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void VerificarLogout() {
+        AlertDialog.Builder verifiqueAlerta = new AlertDialog.Builder(ProdutoInfoActivity.this);
+        verifiqueAlerta.setMessage("Deseja sair?")
+                .setCancelable(false).setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(ProdutoInfoActivity.this, EntrarActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        }).setNegativeButton("Não", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.cancel();
+            }
+        });
+        AlertDialog alert = verifiqueAlerta.create();
+        alert.setTitle("Sair");
+        alert.show();
     }
 
     private void ExibirIconeDoCarrinho() {

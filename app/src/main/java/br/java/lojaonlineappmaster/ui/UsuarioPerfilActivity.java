@@ -4,11 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -128,6 +131,9 @@ public class UsuarioPerfilActivity extends AppCompatActivity implements
 
         // Ícone de atualização do carrinho
         ExibirIconeDoCarrinho();
+
+        // para verificar se o preço total é zero ou não
+        verificarPrecoTotalZero();
     }
 
     @Override
@@ -138,38 +144,60 @@ public class UsuarioPerfilActivity extends AppCompatActivity implements
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        return false;
+        int id = item.getItemId();
+        if(id==R.id.Home){
+            startActivity(new Intent(UsuarioPerfilActivity.this,MainActivity.class));
+        }
+        if (id == R.id.Perfil) {
+            startActivity(new Intent(UsuarioPerfilActivity.this, UsuarioPerfilActivity.class));
+        } else if (id == R.id.MeusPedidos) {
+            startActivity(new Intent(UsuarioPerfilActivity.this, CategoriaActivity.class));
+        } else if (id == R.id.Carrinho) {
+            startActivity(new Intent(UsuarioPerfilActivity.this, CarrinhoActivity.class));
+        } else if (id == R.id.Frutas) {
+            Intent intent = new Intent(UsuarioPerfilActivity.this, CategoriaActivity.class);
+            intent.putExtra("Categoria Nome", "Frutas");
+            startActivity(intent);
+        } else if (id == R.id.Vegetais) {
+            Intent intent = new Intent(UsuarioPerfilActivity.this, CategoriaActivity.class);
+            intent.putExtra("Categoria Nome", "Vegetais");
+            startActivity(intent);
+        } else if (id == R.id.Carnes) {
+            Intent intent = new Intent(UsuarioPerfilActivity.this, CategoriaActivity.class);
+            intent.putExtra("Categoria Nome", "Carnes");
+            startActivity(intent);
+        } else if (id == R.id.Eletronicos) {
+            Intent intent = new Intent(UsuarioPerfilActivity.this, CategoriaActivity.class);
+            intent.putExtra("Categoria Nome", "Eletronicos");
+            startActivity(intent);
+        } else if (id == R.id.Sair) {
+            VerificarLogout();
+        }
+        drawerLayout.closeDrawer(GravityCompat.START);
+        return true;
     }
 
-    private void obterDadosDoPerfilDoUsuario() {
-        DatabaseReference root = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference m = root.child("usuarios").child(UsuarioId);
 
-        ValueEventListener valueEventListener = new ValueEventListener() {
+    private void VerificarLogout() {
+        AlertDialog.Builder verifiqueAlerta = new AlertDialog.Builder(UsuarioPerfilActivity.this);
+        verifiqueAlerta.setMessage("Deseja sair?")
+                .setCancelable(false).setPositiveButton("Sim", new DialogInterface.OnClickListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    String Nome = snapshot.child("Nome").getValue().toString();
-                    String Imagem = snapshot.child("Imagem").getValue().toString();
-                    String Telefone = snapshot.child("Telefone").getValue().toString();
-
-                    UsuarioNome.setText(Nome);
-                    UsuarioTelefone.setText(Telefone);
-                    UsuarioEmail.setText(AtualUsuario.getEmail().toString());
-
-                    if (Imagem.equals("default")) {
-                        Picasso.get().load(R.drawable.profile).into(UsuarioImagem);
-                    } else
-                        Picasso.get().load(Imagem).placeholder(R.drawable.profile).into(UsuarioImagem);
-                }
+            public void onClick(DialogInterface dialogInterface, int i) {
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(UsuarioPerfilActivity.this, EntrarActivity.class);
+                startActivity(intent);
+                finish();
             }
-
+        }).setNegativeButton("Não", new DialogInterface.OnClickListener() {
             @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.cancel();
             }
-        };
-        m.addListenerForSingleValueEvent(valueEventListener);
+        });
+        AlertDialog alert = verifiqueAlerta.create();
+        alert.setTitle("Sair");
+        alert.show();
     }
 
     private void DefinirNavegacao(){
@@ -216,6 +244,38 @@ public class UsuarioPerfilActivity extends AppCompatActivity implements
         m.addListenerForSingleValueEvent(valueEventListener);
 
     }
+
+    private void obterDadosDoPerfilDoUsuario() {
+        DatabaseReference root = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference m = root.child("usuarios").child(UsuarioId);
+
+        ValueEventListener valueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    String Nome = snapshot.child("Nome").getValue().toString();
+                    String Imagem = snapshot.child("Imagem").getValue().toString();
+                    String Telefone = snapshot.child("Telefone").getValue().toString();
+
+                    UsuarioNome.setText(Nome);
+                    UsuarioTelefone.setText(Telefone);
+                    UsuarioEmail.setText(AtualUsuario.getEmail().toString());
+
+                    if (Imagem.equals("default")) {
+                        Picasso.get().load(R.drawable.profile).into(UsuarioImagem);
+                    } else
+                        Picasso.get().load(Imagem).placeholder(R.drawable.profile).into(UsuarioImagem);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        };
+        m.addListenerForSingleValueEvent(valueEventListener);
+    }
+
 
     private void carregarImagem() {
         Intent intent = new Intent();
@@ -289,6 +349,7 @@ public class UsuarioPerfilActivity extends AppCompatActivity implements
         CarrinhoPersonalizadoNumero = (TextView) findViewById(R.id.CarrinhoPersonalizadoNumero);
 
         PaginaTitulo.setText("Meu Perfil");
+        DefinirNumeroItensIconeCarrinho();
 
         CarrinhoPersonalizadoContainer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -296,5 +357,52 @@ public class UsuarioPerfilActivity extends AppCompatActivity implements
                 startActivity(new Intent(UsuarioPerfilActivity.this, CategoriaActivity.class));
             }
         });
+    }
+
+    private void DefinirNumeroItensIconeCarrinho() {
+        DatabaseReference root = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference m = root.child("carrinho").child(UsuarioId);
+
+        ValueEventListener eventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    if (snapshot.getChildrenCount() == 1) {
+                        CarrinhoPersonalizadoNumero.setVisibility(View.GONE);
+                    } else {
+                        CarrinhoPersonalizadoNumero.setVisibility(View.VISIBLE);
+                        CarrinhoPersonalizadoNumero.setText(String.valueOf(snapshot.getChildrenCount() - 1));
+                    }
+                } else {
+                    CarrinhoPersonalizadoNumero.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        };
+        m.addListenerForSingleValueEvent(eventListener);
+    }
+
+    public void verificarPrecoTotalZero(){
+        DatabaseReference root = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference m = root.child("carrinho").child(UsuarioId);
+
+        ValueEventListener eventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (!snapshot.exists()) {
+                    FirebaseDatabase.getInstance().getReference().child("carrinho").child(UsuarioId).child("pretoTotal").setValue(0);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        };
+        m.addListenerForSingleValueEvent(eventListener);
     }
 }
