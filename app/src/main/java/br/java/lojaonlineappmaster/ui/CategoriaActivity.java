@@ -357,7 +357,7 @@ public class CategoriaActivity extends AppCompatActivity implements
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (!snapshot.exists()) {
-                    FirebaseDatabase.getInstance().getReference().child("carrinho").child(UsuarioId).child("pretoTotal").setValue(0);
+                    FirebaseDatabase.getInstance().getReference().child("carrinho").child(UsuarioId).child("precoTotal").setValue(0);
                 }
             }
 

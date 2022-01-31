@@ -113,7 +113,7 @@ public class CarrinhoAdapter extends RecyclerView.Adapter {
 
             produtoImagem = itemView.findViewById(R.id.produto_imagem);
             produtoTitulo = itemView.findViewById(R.id.produto_titulo);
-            produtoImagem = itemView.findViewById(R.id.copon_txt);
+            livreCupon = itemView.findViewById(R.id.copon_txt);
             produtoPreco = itemView.findViewById(R.id.preco);
             reduzidoPreco = itemView.findViewById(R.id.cut_preco);
             ofertaAplicada = itemView.findViewById(R.id.oferta_texto);

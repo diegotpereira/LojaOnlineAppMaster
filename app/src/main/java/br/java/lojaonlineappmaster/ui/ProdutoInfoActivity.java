@@ -121,6 +121,7 @@ public class ProdutoInfoActivity extends AppCompatActivity implements Navigation
         PNome = (TextView) findViewById(R.id.ProdutoNome);
         PCategoria = (TextView) findViewById(R.id.ProdutoCategoria);
         PMontante = (TextView) findViewById(R.id.ProdutoDisponivelQuantidade);
+        PPreco = (TextView) findViewById(R.id.ProdutoPrecoAtual);
         VelhoPreco = (TextView) findViewById(R.id.ProdutoPrecoVelho);
         TaxaDeOferta = (TextView) findViewById(R.id.TaxaOferta);
         OfertaConteiner = (LinearLayout) findViewById(R.id.OfertaContainer);
@@ -163,7 +164,7 @@ public class ProdutoInfoActivity extends AppCompatActivity implements Navigation
         Picasso.get().load(ProdutoImagem).into(PImagem);
         PNome.setText(ProdutoNome);
 
-        if (EhOferecido.equalsIgnoreCase("sim")) {
+        if (EhOferecido.equalsIgnoreCase("Sim")) {
             int PrecoDepoisDaOferta =
                     (int) ((Integer.valueOf(ProdutoPreco)) - (Integer.valueOf(ProdutoPreco) * 0.3));
             PPreco.setText("Preço: " + PrecoDepoisDaOferta + " EGP");
@@ -288,7 +289,7 @@ public class ProdutoInfoActivity extends AppCompatActivity implements Navigation
 
                 int PrecoDepoisDaOferta;
 
-                if (EhOferecido.equalsIgnoreCase("sim")) PrecoDepoisDaOferta = (int) ((Integer.valueOf(ProdutoPreco)) - (Integer.valueOf(ProdutoPreco) * 0.3) );
+                if (EhOferecido.equalsIgnoreCase("Sim")) PrecoDepoisDaOferta = (int) ((Integer.valueOf(ProdutoPreco)) - (Integer.valueOf(ProdutoPreco) * 0.3) );
                 else PrecoDepoisDaOferta = (int) (Integer.valueOf(ProdutoPreco));
 
                 hashMap.put("produtoPreco", String.valueOf(PrecoDepoisDaOferta));
@@ -522,7 +523,7 @@ public class ProdutoInfoActivity extends AppCompatActivity implements Navigation
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (!snapshot.exists()) {
-                    FirebaseDatabase.getInstance().getReference().child("carrinho").child(UsuarioId).child("pretoTotal").setValue(0);
+                    FirebaseDatabase.getInstance().getReference().child("carrinho").child(UsuarioId).child("precoTotal").setValue(0);
                 }
             }
 
