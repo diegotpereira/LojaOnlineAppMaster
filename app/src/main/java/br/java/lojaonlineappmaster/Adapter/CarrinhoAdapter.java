@@ -149,6 +149,7 @@ public class CarrinhoAdapter extends RecyclerView.Adapter {
                                 int quantidade,
                                 String precoCorte, int ofertaAplicadaNo) {
             Picasso.get().load(recurso).into(produtoImagem);
+            produtoTitulo.setText(titulo);
 
             if (livreCuponsNo > 0) {
                 cuponIcone.setVisibility(View.VISIBLE);
@@ -179,12 +180,13 @@ public class CarrinhoAdapter extends RecyclerView.Adapter {
                 @Override
                 public void onClick(View view) {
                     produtoQuantidade.setText(String.valueOf(Integer.parseInt(produtoQuantidade
-                            .getText().toString())));
+                            .getText().toString()) + 1));
                     produtoPreco.setText("Preço: " + String.valueOf(produtoPrecoTexto *
                             Integer.parseInt(produtoQuantidade.getText().toString())) + " R$");
 
-                    root.child("carrinho").child(AtualUsuario).child(titulo).child("quantidade")
-                            .setValue(produtoQuantidade.getText().toString());
+                    root.child("carrinho").child(AtualUsuario).child("quantidade")
+                            .child("produtoQuantidade").setValue(produtoQuantidade
+                            .getText().toString());
 
                     contarPrecoTotal();
                 }

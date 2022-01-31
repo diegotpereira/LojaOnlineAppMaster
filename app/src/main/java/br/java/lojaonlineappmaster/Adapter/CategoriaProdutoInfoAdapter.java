@@ -121,9 +121,9 @@ public class CategoriaProdutoInfoAdapter extends RecyclerView.Adapter<CategoriaP
                     // aqui salve isFavorite no firebase
                     DatabaseReference x = FirebaseDatabase.getInstance().getReference("favoritos").child(UsuarioId).child(produto.getProdutoNome());
                     x.child("verificado").setValue(true);
-                    x.child("produtoimagem").setValue(produto.getProdutoImagem());
-                    x.child("produtopreco").setValue("EGP " + produto.getProdutoPreco());
-                    x.child("produtotitulo").setValue(produto.getProdutoNome());
+                    x.child("produtoImagem").setValue(produto.getProdutoImagem());
+                    x.child("produtoPreco").setValue("EGP " + produto.getProdutoPreco());
+                    x.child("produtoTitulo").setValue(produto.getProdutoNome());
                 }
             }
         });

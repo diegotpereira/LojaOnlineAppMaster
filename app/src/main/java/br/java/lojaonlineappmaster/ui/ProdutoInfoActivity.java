@@ -164,7 +164,8 @@ public class ProdutoInfoActivity extends AppCompatActivity implements Navigation
         PNome.setText(ProdutoNome);
 
         if (EhOferecido.equalsIgnoreCase("sim")) {
-            int PrecoDepoisDaOferta = (int) ((Integer.valueOf(ProdutoPreco)) - (Integer.valueOf(ProdutoPreco) * 0.3));
+            int PrecoDepoisDaOferta =
+                    (int) ((Integer.valueOf(ProdutoPreco)) - (Integer.valueOf(ProdutoPreco) * 0.3));
             PPreco.setText("Preço: " + PrecoDepoisDaOferta + " EGP");
             VelhoPreco.setText(ProdutoPreco + " EGP");
             TaxaDeOferta.setText("- 30%");
@@ -250,9 +251,11 @@ public class ProdutoInfoActivity extends AppCompatActivity implements Navigation
                     DatabaseReference x = FirebaseDatabase.getInstance().getReference()
                             .child("favoritos").child(UsuarioId).child(ProdutoNome);
                     x.child("verificado").setValue(true);
-                    x.child("ProdutoImagem").setValue(ProdutoImagem);
-                    x.child("ProdutoPreco").setValue("EGP " + ProdutoPreco);
+                    x.child("produtoImagem").setValue(ProdutoImagem);
+                    x.child("produtoPreco").setValue("EGP " + ProdutoPreco);
                     x.child("produtoTitulo").setValue(ProdutoNome);
+
+
                 }
             }
         });
