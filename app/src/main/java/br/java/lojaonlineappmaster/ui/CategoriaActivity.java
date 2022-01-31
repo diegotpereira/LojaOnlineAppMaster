@@ -164,6 +164,7 @@ public class CategoriaActivity extends AppCompatActivity implements
                                             ProdutoDataVencimento,
                                             false));
                                 }
+                                adapter.notifyDataSetChanged();
                             }
 
                             @Override

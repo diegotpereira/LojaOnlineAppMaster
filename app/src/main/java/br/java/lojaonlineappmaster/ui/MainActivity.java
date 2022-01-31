@@ -227,7 +227,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, CategoriaActivity.class);
-                intent.putExtra("Categoria Nome", "Eletrônicos");
+                intent.putExtra("Categoria Nome", "Eletronicos");
                 startActivity(intent);
             }
         });
