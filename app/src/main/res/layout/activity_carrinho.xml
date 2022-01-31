@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/cartDrawer"
+    android:id="@+id/carrinhoDrawer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.CarrinhoActivity">
@@ -13,12 +13,12 @@
         android:layout_height="match_parent">
         <include
             layout="@layout/main2_toolbar"
-            android:id="@+id/cartToolbar"/>
+            android:id="@+id/carrinhoToolbar"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/cartToolbar">
+            android:layout_below="@id/carrinhoToolbar">
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -27,14 +27,14 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf ="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:id="@+id/Cartframe"/>
+                android:id="@+id/CarrinhoFrame"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </RelativeLayout>
 
     <com.google.android.material.navigation.NavigationView
-        android:id="@+id/cartNavigationViewer"
+        android:id="@+id/carrinhoNavigationViewer"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
