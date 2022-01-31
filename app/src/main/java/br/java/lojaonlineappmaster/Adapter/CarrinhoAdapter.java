@@ -166,7 +166,7 @@ public class CarrinhoAdapter extends RecyclerView.Adapter {
                 livreCupon.setVisibility(View.INVISIBLE);
                 cuponAplicado.setVisibility(View.INVISIBLE);
             }
-            produtoPreco.setText("Preço: " + String.valueOf(produtoPrecoTexto * quantidade) + " R$");
+            produtoPreco.setText("R$: " + "Preço: " + String.valueOf(produtoPrecoTexto * quantidade));
 
             if (Integer.parseInt(precoCorte) > 0) {
                 reduzidoPreco.setText(precoCorte);

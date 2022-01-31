@@ -90,7 +90,7 @@ public class CategoriaProdutoInfoAdapter extends RecyclerView.Adapter<CategoriaP
 
         Picasso.get().load(produto.getProdutoImagem()).into(holder.ProdutoImagem);
         holder.ProdutoNome.setText(produto.getProdutoNome());
-        holder.ProdutoPreco.setText("Preço: " + produto.getProdutoPreco() + " EGP");
+        holder.ProdutoPreco.setText("R$:" + "Preço: " + produto.getProdutoPreco());
         holder.ProdutoDataVencimento.setText("Data de Vencimento: " + produto.getProdutoDataVencimento());
 
         if (produto.getProdutoDataVencimento().equalsIgnoreCase("null")) holder.ProdutoDataVencimento.setVisibility(View.INVISIBLE);
@@ -122,7 +122,7 @@ public class CategoriaProdutoInfoAdapter extends RecyclerView.Adapter<CategoriaP
                     DatabaseReference x = FirebaseDatabase.getInstance().getReference("favoritos").child(UsuarioId).child(produto.getProdutoNome());
                     x.child("verificado").setValue(true);
                     x.child("produtoImagem").setValue(produto.getProdutoImagem());
-                    x.child("produtoPreco").setValue("EGP " + produto.getProdutoPreco());
+                    x.child("produtoPreco").setValue("R$ " + produto.getProdutoPreco());
                     x.child("produtoTitulo").setValue(produto.getProdutoNome());
                 }
             }

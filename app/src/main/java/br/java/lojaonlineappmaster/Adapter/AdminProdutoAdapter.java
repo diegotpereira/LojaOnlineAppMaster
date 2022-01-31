@@ -73,7 +73,7 @@ public class AdminProdutoAdapter extends RecyclerView.Adapter<AdminProdutoAdapte
         holder.nome.setText(adminProdutos.get(position).getNome());
         holder.categoria.setText("Categoria: " + adminProdutos.get(position).getCategoria());
         holder.quantidade.setText("Quantidade Disponivél: " + adminProdutos.get(position).getQuantidade());
-        holder.preco.setText("Preço: " + adminProdutos.get(position).getPreco() + " EGP");
+        holder.preco.setText("R$" + "Preço: " + adminProdutos.get(position).getPreco());
 
         if (adminProdutos.get(position).getDataVencimento().equalsIgnoreCase("null"))
             holder.dataVencimento.setVisibility(View.GONE);

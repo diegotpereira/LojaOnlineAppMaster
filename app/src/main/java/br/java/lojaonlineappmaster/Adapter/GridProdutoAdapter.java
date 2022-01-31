@@ -80,7 +80,7 @@ public class GridProdutoAdapter extends BaseAdapter {
 
 
             produtoTitulo.setText(horizontalProdutoModelLista.get(position).getProdutoTitulo());
-            produtoPreco.setText("EGP " + horizontalProdutoModelLista.get(position).getProdutoPreco());
+            produtoPreco.setText("R$ " + horizontalProdutoModelLista.get(position).getProdutoPreco());
 
             boolean ehFavorito = false;
 
@@ -91,7 +91,6 @@ public class GridProdutoAdapter extends BaseAdapter {
                     ehFavorito = true;
 
                     horizontalProdutoModelLista.get(position).setVerificado(true);
-
                     break;
                 }
             }

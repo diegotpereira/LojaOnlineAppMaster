@@ -274,13 +274,13 @@ public class ProdutoInfoActivity extends AppCompatActivity implements Navigation
         if (EhOferecido.equalsIgnoreCase("Sim")) {
             int PrecoDepoisDaOferta =
                     (int) ((Integer.valueOf(ProdutoPreco)) - (Integer.valueOf(ProdutoPreco) * 0.3));
-            PPreco.setText("R$:" + " Preço " + PrecoDepoisDaOferta);
-            VelhoPreco.setText("R$:" + ProdutoPreco);
+            PPreco.setText("R$: " + " Preço " + PrecoDepoisDaOferta);
+            VelhoPreco.setText("R$: " + ProdutoPreco);
             TaxaDeOferta.setText("- 30%");
             VelhoPreco.setPaintFlags(VelhoPreco.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
         } else {
             OfertaConteiner.setVisibility(View.GONE);
-            PPreco.setText("R$:" + "Preço " + ProdutoPreco);
+            PPreco.setText("R$: " + "Preço " + ProdutoPreco);
         }
 
         if (ProdutoEhFavorito.equalsIgnoreCase("true")) PIsFav.setImageResource(R.drawable.ic_baseline_favorite_24);
