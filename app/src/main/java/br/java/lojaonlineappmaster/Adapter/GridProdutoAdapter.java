@@ -128,7 +128,7 @@ public class GridProdutoAdapter extends BaseAdapter {
             public void onClick(View view) {
                 Intent intent = new Intent(context, ProdutoInfoActivity.class);
                 intent.putExtra("Produto Nome", horizontalProdutoModelLista.get(position).getProdutoTitulo());
-                intent.putExtra("Produto Preço", horizontalProdutoModelLista.get(position).getProdutoPreco());
+                intent.putExtra("Produto Preco", horizontalProdutoModelLista.get(position).getProdutoPreco());
                 intent.putExtra("Produto Imagem", horizontalProdutoModelLista.get(position).getProdutoImagem());
                 intent.putExtra("Produto Data Vencimento", horizontalProdutoModelLista.get(position).getDataVencimento());
                 intent.putExtra("Produto EhFavorito", String.valueOf(horizontalProdutoModelLista.get(position).isVerificado()));

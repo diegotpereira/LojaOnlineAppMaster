@@ -86,11 +86,11 @@ public class MeuCarrinhoFragmento extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragmento_meu_carrinho, container, false);
-        CarrinhoItemRecyclerView = view.findViewById(R.id.cart_recycle);
+        CarrinhoItemRecyclerView = view.findViewById(R.id.carrinho_recycle);
         CarrinhoConfirmar = view.findViewById(R.id.carrinho_confirmarBtn);
         CarrinhoLimpar = view.findViewById(R.id.carrinho_limparBtn);
         precoTotal = view.findViewById(R.id.precoTotal);
-        Carrinho_container = view.findViewById(R.id.cart_container);
+        Carrinho_container = view.findViewById(R.id.carrinho_container);
 
         SemItem = view.findViewById(R.id.sem_item);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -209,6 +209,7 @@ public class MeuCarrinhoFragmento extends Fragment {
     public void precoTotalDaConta() {
 
         precoTotalValor = 0;
+        m = root.child("carrinho");
         m = root.child("carrinho");
 
         ValueEventListener valueEventListener = new ValueEventListener() {

@@ -77,7 +77,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="50dp"
                 android:layout_marginBottom="20dp"
-                android:text="Info"
+                android:text="Informações"
                 android:textColor="#000"
                 android:textSize="23dp"
                 android:textStyle="italic" />
@@ -147,14 +147,14 @@
                 android:id="@+id/UsuarioFavorito"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/PhoneIcon"
                 android:layout_below="@id/PhoneIcon"
-                android:text="My Favorites"
-                android:textSize="20dp"
-                android:textColor="#000"
-                android:textStyle="normal"
+                android:layout_marginLeft="2dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginLeft="2dp"/>
+                android:layout_toRightOf="@id/PhoneIcon"
+                android:text="Meus Favoritos"
+                android:textColor="#000"
+                android:textSize="20dp"
+                android:textStyle="normal" />
 
             <ImageView
                 android:id="@+id/OrdersIcon"
@@ -171,14 +171,14 @@
                 android:id="@+id/UsuarioPerdidos"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/PhoneIcon"
                 android:layout_below="@id/FavoriteIcon"
-                android:text="My Orders"
-                android:textSize="20dp"
-                android:textColor="#000"
-                android:textStyle="normal"
+                android:layout_marginLeft="2dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginLeft="2dp"/>
+                android:layout_toRightOf="@id/PhoneIcon"
+                android:text="Meus Pedidos"
+                android:textColor="#000"
+                android:textSize="20dp"
+                android:textStyle="normal" />
 
 
             <ImageView

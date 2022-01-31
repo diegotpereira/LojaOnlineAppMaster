@@ -93,7 +93,7 @@ public class AddProdutoActivity extends AppCompatActivity {
         quantidadeLayout = (TextInputLayout) findViewById(R.id.editarTextoProdutoNumeroLayout);
         precoLayout = (TextInputLayout) findViewById(R.id.editarTextoProdutoPrecoLayout);
         dataVencimentoLayout = (TextInputLayout)
-                findViewById(R.id.editarTextoProdutoDataVencimentoLayout);
+                findViewById(R.id.editarTextoProdutoExpiradoLayout);
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.produtosTipos, android.R.layout.simple_spinner_item);

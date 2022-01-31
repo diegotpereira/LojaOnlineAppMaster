@@ -98,7 +98,7 @@ public class CategoriaActivity extends AppCompatActivity implements
 
                 Intent intent = new Intent(CategoriaActivity.this, ProdutoInfoActivity.class);
                 intent.putExtra("Produto Nome", produto.getProdutoNome());
-                intent.putExtra("Produto Preço", produto.getProdutoPreco());
+                intent.putExtra("Produto Preco", produto.getProdutoPreco());
                 intent.putExtra("Produto Imagem", produto.getProdutoImagem());
                 intent.putExtra("Produto Data Vencimento", produto.getProdutoDataVencimento());
                 intent.putExtra("Produto EhFavorito", String.valueOf(produto.isEhFavorito()));

@@ -8,12 +8,12 @@
     tools:context=".fragment.MeuCarrinhoFragmento">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/cart_recycle"
+        android:id="@+id/carrinho_recycle"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_above="@id/cart_container"/>
+        android:layout_above="@id/carrinho_container"/>
 
     <TextView
         android:id="@+id/sem_item"
@@ -27,7 +27,7 @@
         android:layout_centerHorizontal="true"/>
 
     <LinearLayout
-        android:id="@+id/cart_container"
+        android:id="@+id/carrinho_container"
         android:layout_width="match_parent"
         android:layout_height="90dp"
         android:orientation="horizontal"
@@ -49,7 +49,7 @@
                 android:id="@+id/precoTotal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2000 EGP"
+                android:text="R$ 2000"
                 android:textSize="20sp"
                 android:textColor="#FFF"
                 android:textStyle="bold" />
@@ -57,7 +57,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Total Price"
+                android:text="Preço Total"
                 android:textColor="#FFF"
                 android:textStyle="bold"/>
         </LinearLayout>
@@ -69,7 +69,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/square_shape"
-            android:text="Confirm"
+            android:text="Confirmar"
             android:layout_marginRight="10dp"
             android:textColor="#000"
             android:textSize="16sp"
@@ -81,7 +81,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/square_shape"
-            android:text="Clear"
+            android:text="Limpar"
             android:layout_marginRight="10dp"
             android:textColor="#000"
             android:textSize="16sp"

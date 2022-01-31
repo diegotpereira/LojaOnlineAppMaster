@@ -103,7 +103,7 @@ public class ProdutoInfoActivity extends AppCompatActivity implements Navigation
 
         // Envio de dados
         ProdutoNome = getIntent().getStringExtra("Produto Nome");
-        ProdutoPreco = getIntent().getStringExtra("Produto Preço");
+        ProdutoPreco = getIntent().getStringExtra("Produto Preco");
         ProdutoImagem = getIntent().getStringExtra("Produto Imagem");
         ProdutoDataVencimento = getIntent().getStringExtra("Produto Data Vencimento");
         ProdutoEhFavorito = getIntent().getStringExtra("Produto EhFavorito");
@@ -160,78 +160,6 @@ public class ProdutoInfoActivity extends AppCompatActivity implements Navigation
         x.addListenerForSingleValueEvent(valueEventListener);
     }
 
-    private void DefinirDadosProduto(){
-        Picasso.get().load(ProdutoImagem).into(PImagem);
-        PNome.setText(ProdutoNome);
-
-        if (EhOferecido.equalsIgnoreCase("Sim")) {
-            int PrecoDepoisDaOferta =
-                    (int) ((Integer.valueOf(ProdutoPreco)) - (Integer.valueOf(ProdutoPreco) * 0.3));
-            PPreco.setText("Preço: " + PrecoDepoisDaOferta + " EGP");
-            VelhoPreco.setText(ProdutoPreco + " EGP");
-            TaxaDeOferta.setText("- 30%");
-            VelhoPreco.setPaintFlags(VelhoPreco.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-        } else {
-            OfertaConteiner.setVisibility(View.GONE);
-            PPreco.setText("Preço: " + ProdutoPreco + "EGP");
-        }
-
-        if (ProdutoEhFavorito.equalsIgnoreCase("true")) PIsFav.setImageResource(R.drawable.ic_baseline_favorite_24);
-        else PIsFav.setImageResource(R.drawable.ic_baseline_favorite_shadow_24);
-
-        if (ProdutoDataVencimento.equalsIgnoreCase("null")) PDataVencimento.setVisibility(View.GONE);
-        else { PDataVencimento.setVisibility(View.VISIBLE); PDataVencimento.setText("Data de Vencimento: " + ProdutoDataVencimento); }
-
-        DatabaseReference root = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference m = root.child("produto");
-
-        ValueEventListener valueEventListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot dataSnapshot : snapshot.child("Frutas").getChildren()) {
-                    if (snapshot.getKey().equals(ProdutoNome)) {
-                        PCategoria.setText("Categoria: Frutas");
-                        PMontante.setText("Quantidade Disponível: " + snapshot.child("quantidade").getValue());
-                        break;
-                    }
-                }
-
-                for(DataSnapshot dataSnapshot : snapshot.child("Eletronicos").getChildren()) {
-                    if (snapshot.getKey().equals(ProdutoNome)) {
-                        PCategoria.setText("Categoria: Eletrônicos");
-                        PMontante.setText("Quantidade Disponível: " + snapshot.child("quantidade").getValue());
-
-                        break;
-                    }
-                }
-
-                for(DataSnapshot dataSnapshot : snapshot.child("Carnes").getChildren()) {
-                    if (snapshot.getKey().equals(ProdutoNome)) {
-                        PCategoria.setText("Categoria: Carnes");
-                        PMontante.setText("Quantidade Disponível: " + snapshot.child("quantidade").getValue());
-
-                        break;
-                    }
-                }
-
-                for(DataSnapshot dataSnapshot : snapshot.child("Vegetais").getChildren()) {
-                    if (snapshot.getKey().equals(ProdutoNome)) {
-                        PCategoria.setText("Categoria: Vegetais");
-                        PMontante.setText("Quantidade Disponível: " + snapshot.child("quantidade").getValue());
-
-                        break;
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        };
-        m.addListenerForSingleValueEvent(valueEventListener);
-    }
-
     private void aoClicar() {
         PIsFav.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -253,7 +181,7 @@ public class ProdutoInfoActivity extends AppCompatActivity implements Navigation
                             .child("favoritos").child(UsuarioId).child(ProdutoNome);
                     x.child("verificado").setValue(true);
                     x.child("produtoImagem").setValue(ProdutoImagem);
-                    x.child("produtoPreco").setValue("EGP " + ProdutoPreco);
+                    x.child("produtoPreco").setValue("R$ " + ProdutoPreco);
                     x.child("produtoTitulo").setValue(ProdutoNome);
 
 
@@ -314,6 +242,8 @@ public class ProdutoInfoActivity extends AppCompatActivity implements Navigation
 
                 // Ícone de atualização do carrinho
                 ExibirIconeDoCarrinho();
+
+
             }
         });
     }
@@ -330,20 +260,74 @@ public class ProdutoInfoActivity extends AppCompatActivity implements Navigation
         AtualizarContainer();
 
         // para verificar se o preço total é zero ou não
-        VerificarTotalPrecoZero();
+        DefinirNumeroDeItensNoIconeDoCarrinho();
 
         // para verificar se o preço total é zero ou não
         verificarPrecoTotalZero();
     }
-    private void VerificarTotalPrecoZero() {
-        DatabaseReference root = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference m = root.child("carrinho").child(UsuarioId);
 
-        ValueEventListener eventListener = new ValueEventListener() {
+
+    private void DefinirDadosProduto(){
+        Picasso.get().load(ProdutoImagem).into(PImagem);
+        PNome.setText(ProdutoNome);
+
+        if (EhOferecido.equalsIgnoreCase("Sim")) {
+            int PrecoDepoisDaOferta =
+                    (int) ((Integer.valueOf(ProdutoPreco)) - (Integer.valueOf(ProdutoPreco) * 0.3));
+            PPreco.setText("R$:" + " Preço " + PrecoDepoisDaOferta);
+            VelhoPreco.setText("R$:" + ProdutoPreco);
+            TaxaDeOferta.setText("- 30%");
+            VelhoPreco.setPaintFlags(VelhoPreco.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+        } else {
+            OfertaConteiner.setVisibility(View.GONE);
+            PPreco.setText("R$:" + "Preço " + ProdutoPreco);
+        }
+
+        if (ProdutoEhFavorito.equalsIgnoreCase("true")) PIsFav.setImageResource(R.drawable.ic_baseline_favorite_24);
+        else PIsFav.setImageResource(R.drawable.ic_baseline_favorite_shadow_24);
+
+        if (ProdutoDataVencimento.equalsIgnoreCase("null")) PDataVencimento.setVisibility(View.GONE);
+        else { PDataVencimento.setVisibility(View.VISIBLE); PDataVencimento.setText("Data de Vencimento: " + ProdutoDataVencimento); }
+
+        DatabaseReference root = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference m = root.child("produto");
+
+        ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (!snapshot.exists()) {
-                    FirebaseDatabase.getInstance().getReference().child("carrinho").child(UsuarioId).child("precoTotal").setValue(0);
+                for(DataSnapshot dataSnapshot : snapshot.child("Frutas").getChildren()) {
+                    if (snapshot.getKey().equals(ProdutoNome)) {
+                        PCategoria.setText("Categoria: Frutas");
+                        PMontante.setText("Quantidade Disponível: " + dataSnapshot.child("quantidade").getValue());
+                        break;
+                    }
+                }
+
+                for(DataSnapshot dataSnapshot : snapshot.child("Eletronicos").getChildren()) {
+                    if (snapshot.getKey().equals(ProdutoNome)) {
+                        PCategoria.setText("Categoria: Eletrônicos");
+                        PMontante.setText("Quantidade Disponível: " + dataSnapshot.child("quantidade").getValue());
+
+                        break;
+                    }
+                }
+
+                for(DataSnapshot dataSnapshot : snapshot.child("Carnes").getChildren()) {
+                    if (snapshot.getKey().equals(ProdutoNome)) {
+                        PCategoria.setText("Categoria: Carnes");
+                        PMontante.setText("Quantidade Disponível: " + dataSnapshot.child("quantidade").getValue());
+
+                        break;
+                    }
+                }
+
+                for(DataSnapshot dataSnapshot : snapshot.child("Vegetais").getChildren()) {
+                    if (snapshot.getKey().equals(ProdutoNome)) {
+                        PCategoria.setText("Categoria: Vegetais");
+                        PMontante.setText("Quantidade Disponível: " + dataSnapshot.child("quantidade").getValue());
+
+                        break;
+                    }
                 }
             }
 
@@ -352,7 +336,7 @@ public class ProdutoInfoActivity extends AppCompatActivity implements Navigation
 
             }
         };
-        m.addListenerForSingleValueEvent(eventListener);
+        m.addListenerForSingleValueEvent(valueEventListener);
     }
 
     private void DefinirNavegacao(){
@@ -390,6 +374,7 @@ public class ProdutoInfoActivity extends AppCompatActivity implements Navigation
                         Picasso.get().load(Imagem).placeholder(R.drawable.profile).into(mPessoa_imagem);
                 }
             }
+
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
@@ -441,6 +426,7 @@ public class ProdutoInfoActivity extends AppCompatActivity implements Navigation
         return true;
     }
 
+
     private void VerificarLogout() {
         AlertDialog.Builder verifiqueAlerta = new AlertDialog.Builder(ProdutoInfoActivity.this);
         verifiqueAlerta.setMessage("Deseja sair?")
@@ -468,6 +454,7 @@ public class ProdutoInfoActivity extends AppCompatActivity implements Navigation
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowTitleEnabled(true);
+
 
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.main2_toolbar, null);
@@ -515,6 +502,34 @@ public class ProdutoInfoActivity extends AppCompatActivity implements Navigation
         m.addListenerForSingleValueEvent(eventListener);
     }
 
+    private void DefinirNumeroDeItensNoIconeDoCarrinho() {
+        DatabaseReference root = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference m = root.child("carrinho").child(UsuarioId);
+
+        ValueEventListener eventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    if (snapshot.getChildrenCount() == 1) {
+                        CarrinhoPersonalizadoNumero.setVisibility(View.GONE);
+                    } else {
+                        CarrinhoPersonalizadoNumero.setVisibility(View.VISIBLE);
+                        CarrinhoPersonalizadoNumero.setText(String.valueOf(snapshot.getChildrenCount() -1));
+                    }
+                } else {
+                    CarrinhoPersonalizadoNumero.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        };
+        m.addListenerForSingleValueEvent(eventListener);
+    }
+
+
     public void verificarPrecoTotalZero(){
         DatabaseReference root = FirebaseDatabase.getInstance().getReference();
         DatabaseReference m = root.child("carrinho").child(UsuarioId);
@@ -523,7 +538,8 @@ public class ProdutoInfoActivity extends AppCompatActivity implements Navigation
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (!snapshot.exists()) {
-                    FirebaseDatabase.getInstance().getReference().child("carrinho").child(UsuarioId).child("precoTotal").setValue(0);
+                    FirebaseDatabase.getInstance().getReference().child("carrinho")
+                            .child(UsuarioId).child("precoTotal").setValue(0);
                 }
             }
 
