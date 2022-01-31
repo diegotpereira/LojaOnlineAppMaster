@@ -187,7 +187,6 @@ public class ProdutoInfoActivity extends AppCompatActivity implements Navigation
                     if (snapshot.getKey().equals(ProdutoNome)) {
                         PCategoria.setText("Categoria: Frutas");
                         PMontante.setText("Quantidade Disponível: " + snapshot.child("quantidade").getValue());
-
                         break;
                     }
                 }
@@ -292,7 +291,7 @@ public class ProdutoInfoActivity extends AppCompatActivity implements Navigation
                 x.child(ProdutoNome).setValue(hashMap);
 
                 // Ícone de atualização do carrinho
-                exibirIconeDoCarrinho();
+                ExibirIconeDoCarrinho();
             }
         });
         DeletarDoCarrinhoContainer.setOnClickListener(new View.OnClickListener() {
@@ -307,7 +306,7 @@ public class ProdutoInfoActivity extends AppCompatActivity implements Navigation
                 Toast.makeText(ProdutoInfoActivity.this, "O produto foi excluído com sucesso do seu carrinho", Toast.LENGTH_SHORT).show();
 
                 // Ícone de atualização do carrinho
-                exibirIconeDoCarrinho();
+                ExibirIconeDoCarrinho();
             }
         });
     }
@@ -319,7 +318,7 @@ public class ProdutoInfoActivity extends AppCompatActivity implements Navigation
         DefinirNavegacao();
 
         // Ícone de atualização do carrinho
-        exibirIconeDoCarrinho();
+        ExibirIconeDoCarrinho();
 
         AtualizarContainer();
 
@@ -408,7 +407,7 @@ public class ProdutoInfoActivity extends AppCompatActivity implements Navigation
         return true;
     }
 
-    private void exibirIconeDoCarrinho() {
+    private void ExibirIconeDoCarrinho() {
         // Toolbar & CarrinhoIcone
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -424,7 +423,7 @@ public class ProdutoInfoActivity extends AppCompatActivity implements Navigation
         CarrinhoPersonalizadoNumero = (TextView) findViewById(R.id.CarrinhoPersonalizadoNumero);
 
         PaginaTitulo.setText("Produto Informação");
-        definirNumeroItensIconeCarrinho();
+        DefinirNumeroItensIconeCarrinho();
 
         CarrinhoPersonalizadoNumero.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -433,7 +432,7 @@ public class ProdutoInfoActivity extends AppCompatActivity implements Navigation
             }
         });
     }
-    private void definirNumeroItensIconeCarrinho() {
+    private void DefinirNumeroItensIconeCarrinho() {
         DatabaseReference root = FirebaseDatabase.getInstance().getReference();
         DatabaseReference m = root.child("carrinho").child(UsuarioId);
 
@@ -449,6 +448,26 @@ public class ProdutoInfoActivity extends AppCompatActivity implements Navigation
                     }
                 } else {
                     CarrinhoPersonalizadoNumero.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        };
+        m.addListenerForSingleValueEvent(eventListener);
+    }
+
+    public void verificarPrecoTotalZero(){
+        DatabaseReference root = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference m = root.child("carrinho").child(UsuarioId);
+
+        ValueEventListener eventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (!snapshot.exists()) {
+                    FirebaseDatabase.getInstance().getReference().child("carrinho").child(UsuarioId).child("pretoTotal").setValue(0);
                 }
             }
 

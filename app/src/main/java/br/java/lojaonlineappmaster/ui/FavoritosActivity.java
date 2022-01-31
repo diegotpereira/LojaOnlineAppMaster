@@ -3,6 +3,7 @@ package br.java.lojaonlineappmaster.ui;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -79,7 +81,7 @@ public class FavoritosActivity extends AppCompatActivity implements NavigationVi
     protected void onStart() {
         super.onStart();
 
-        exibirIconeDoCarrinho();
+        ExibirIconeDoCarrinho();
     }
 
     @Override
@@ -110,13 +112,33 @@ public class FavoritosActivity extends AppCompatActivity implements NavigationVi
         } else if (id == R.id.Eletronicos) {
             startActivity(new Intent(FavoritosActivity.this, CategoriaActivity.class));
         } else if (id == R.id.Sair) {
-            Sair();
+            VerificarLogout();
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
 
-    private void Sair() {}
+    private void VerificarLogout() {
+        AlertDialog.Builder verifiqueAlerta = new AlertDialog.Builder(FavoritosActivity.this);
+        verifiqueAlerta.setMessage("Deseja sair?")
+                .setCancelable(false).setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(FavoritosActivity.this, EntrarActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        }).setNegativeButton("Não", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.cancel();
+            }
+        });
+        AlertDialog alert = verifiqueAlerta.create();
+        alert.setTitle("Sair");
+        alert.show();
+    }
 
     private void DefinirNavegacao() {
         View mNavigationView;
@@ -132,10 +154,10 @@ public class FavoritosActivity extends AppCompatActivity implements NavigationVi
         drawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
 
-        obterDadosDoCabecalhoDeNavegacao();
+        ObterDadosDoCabecalhoDeNavegacao();
     }
 
-    private void Recuperar_Fav() {
+    private void RecuperarFavoritos() {
         LinearLayout meuLayout = (LinearLayout) findViewById(R.id.recyclerViewlayout);
         LayoutInflater inflater = getLayoutInflater();
         inflater.inflate(R.layout.favorito_recycler_view, meuLayout, false);
@@ -170,7 +192,7 @@ public class FavoritosActivity extends AppCompatActivity implements NavigationVi
         ref.addListenerForSingleValueEvent(eventListener);
     }
 
-    private void obterDadosDoCabecalhoDeNavegacao() {
+    private void ObterDadosDoCabecalhoDeNavegacao() {
         DatabaseReference root = FirebaseDatabase.getInstance().getReference();
         DatabaseReference m = root.child("usuarios").child(UsuarioId);
 
@@ -196,10 +218,10 @@ public class FavoritosActivity extends AppCompatActivity implements NavigationVi
             }
         };
         m.addListenerForSingleValueEvent(valueEventListener);
-        Recuperar_Fav();
+        RecuperarFavoritos();
     }
 
-    private  void exibirIconeDoCarrinho() {
+    private  void ExibirIconeDoCarrinho() {
         // Toolbar & Carrinho icone
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(false);
@@ -214,7 +236,7 @@ public class FavoritosActivity extends AppCompatActivity implements NavigationVi
         CarrinhoPersonalizadoNumero = (TextView)findViewById(R.id.CarrinhoPersonalizadoNumero);
 
         PaginaTitulo.setText("Favoritos");
-        definirNumeroItensIconeCarrinho();
+        DefinirNumeroItensIconeCarrinho();
 
         CarrinhoPersonlizadoContainer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -224,7 +246,7 @@ public class FavoritosActivity extends AppCompatActivity implements NavigationVi
         });
     }
 
-    private void definirNumeroItensIconeCarrinho() {
+    private void DefinirNumeroItensIconeCarrinho() {
         DatabaseReference root = FirebaseDatabase.getInstance().getReference();
         DatabaseReference m = root.child("carrinho").child(UsuarioId);
 
@@ -251,6 +273,24 @@ public class FavoritosActivity extends AppCompatActivity implements NavigationVi
         m.addListenerForSingleValueEvent(eventListener);
     }
 
-    private void verificarPrecoTotalZero() {}
+    public void verificarPrecoTotalZero(){
+        DatabaseReference root = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference m = root.child("carrinho").child(UsuarioId);
+
+        ValueEventListener eventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (!snapshot.exists()) {
+                    FirebaseDatabase.getInstance().getReference().child("carrinho").child(UsuarioId).child("pretoTotal").setValue(0);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        };
+        m.addListenerForSingleValueEvent(eventListener);
+    }
 
 }

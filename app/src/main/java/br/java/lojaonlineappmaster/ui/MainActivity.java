@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private Toolbar mToolBar;
     private DrawerLayout drawerLayout;
     private ActionBarDrawerToggle mtoggle;
-    private TextView mpessoa_nome;
+    private TextView mPessoa_nome;
     private NavigationView navigationView;
     private ViewPager pager;
     private View mNavigationView;
@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private TextView PaginaTitulo;
     private ImageView CarrinhoPersonalizadoIcone;
 
-    private String Uid;
+    private String UsuarioId;
     private String nome;
     private String foto;
     private CircleImageView imagem;
@@ -80,13 +80,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         mAuth = FirebaseAuth.getInstance();
         AtualUsuario = mAuth.getCurrentUser();
-        Uid = AtualUsuario.getUid();
+        UsuarioId = AtualUsuario.getUid();
 
         navigationView = findViewById(R.id.navegation_view);
         navigationView.setNavigationItemSelectedListener(this);
         mNavigationView = navigationView.getHeaderView(0);
 
-        mpessoa_nome = mNavigationView.findViewById(R.id.pessoanome);
+        mPessoa_nome = mNavigationView.findViewById(R.id.pessoanome);
         imagem = mNavigationView.findViewById(R.id.circimage);
         drawerLayout = findViewById(R.id.drawer);
 
@@ -103,19 +103,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onStart();
 
         // Recuperar dados do usuário da visualização de cabeçalho
-        Dados_cabecalho_visualizacao_navegacao();
+        ObterDadosDoCabecalhoDeNavegacao();
 
         // Recuperar Favoritos
-        Recuperar_favoritos();
+        RecuperarFavoritos();
 
         // Primeira visualização
-        Recuperar_eletronicos();
+        RecuperarEletronicos();
 
         // Segunda visualização
-        Recuperar_frutas();
+        RecuperarFrutas();
 
         // Terceira visualização
-        Recuperar_Carnes();
+        RecuperarCarnes();
 
         // Quarta visualização
         Recuperar_vegetais();
@@ -124,14 +124,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Recuperar_ofertas();
 
         // Ícone de atualização do carrinho
-        exibirIconeDoCarrinho();
+        ExibirIconeDoCarrinho();
 
         // para verificar se o preço total é zero ou não
         verificarPrecoTotalZero();
     }
     public void Dados_cabecalho_visualizacao_navegacao() {
         DatabaseReference root = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference m = root.child("usuarios").child(Uid);
+        DatabaseReference m = root.child("usuarios").child(UsuarioId);
 
         ValueEventListener eventListener = new ValueEventListener() {
             @Override
@@ -144,7 +144,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         Picasso.get().load(R.drawable.profile).into(imagem);
                     } else
                         Picasso.get().load(foto).placeholder(R.drawable.profile).into(imagem);
-                    mpessoa_nome.setText(nome);
+                    mPessoa_nome.setText(nome);
                 }
             }
 
@@ -156,7 +156,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         m.addListenerForSingleValueEvent(eventListener);
     }
 
-    public void Recuperar_favoritos() {
+    public void RecuperarFavoritos() {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("favoritos")
                 .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
 //
@@ -180,11 +180,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         ref.addListenerForSingleValueEvent(valueEventListener);
     }
 
-    public void Recuperar_eletronicos() {
+    public void RecuperarEletronicos() {
         LinearLayout meuLayout = (LinearLayout) findViewById(R.id.meu_cardView);
 
         LayoutInflater inflater = getLayoutInflater();
-        inflater.inflate(R.layout.grid_product_layout, meuLayout, false);
+        inflater.inflate(R.layout.grid_produto_layout, meuLayout, false);
 
         TextView gridlayouttitulo = meuLayout.findViewById(R.id.grid_produto_layout_textview);
         gridlayouttitulo.setText("Eletrônicos");
@@ -230,39 +230,65 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
     }
 
-    public void Recuperar_frutas() {}
+    public void RecuperarFrutas() {
+        LinearLayout meuLayout = (LinearLayout) findViewById(R.id.meu_cardView2);
+        LayoutInflater inflater = getLayoutInflater();
+        inflater.inflate(R.layout.grid_produto_layout, meuLayout, false);
 
-    public void Recuperar_Carnes() {}
+        TextView gridLayoutTitulo = meuLayout.findViewById(R.id.grid_produto_layout_textview);
+        gridLayoutTitulo.setText("Frutas");
+
+        Button GridLayoutViewBtn = meuLayout.findViewById(R.id.grid_button_layout_viewall_button);
+
+        final GridView gv = meuLayout.findViewById(R.id.produto_layout_gridview);
+        final List<HorizontalProdutoModel> ultimoModelos = new ArrayList<>();
+        final GridProdutoAdapter meu_adapter;
+        meu_adapter = new GridProdutoAdapter(ultimoModelos, favoritos, MainActivity.this);
+
+        m = FirebaseDatabase.getInstance().getReference().child("produto").child("Frutas");
+
+        ValueEventListener eventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot ds : snapshot.getChildren()) {
+                    Usuario meu_usuario = new Usuario();
+                    meu_usuario = ds.getValue(Usuario.class);
+                    meu_usuario.setCategoria(ds.getKey().toString());
+                    ultimoModelos.add(new HorizontalProdutoModel(meu_usuario.getImagem(),
+                            meu_usuario.getCategoria(),
+                            meu_usuario.getPreco(),
+                            false,
+                            meu_usuario.getDataVencimento()));
+                }
+                gv.setAdapter(meu_adapter);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        };
+        m.addListenerForSingleValueEvent(eventListener);
+
+        GridLayoutViewBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, CategoriaActivity.class);
+                intent.putExtra("Categoria", "Frutas");
+                startActivity(intent);
+            }
+        });
+    }
+
+    public void RecuperarCarnes() {
+
+    }
 
     public void Recuperar_vegetais() {}
 
     public void Recuperar_ofertas() {}
 
-    private  void exibirIconeDoCarrinho() {
-        // Toolbar & Carrinho icone
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(false);
-        actionBar.setDisplayShowCustomEnabled(true);
 
-        LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.main2_toolbar, null);
-        actionBar.setCustomView(view);
-
-        CarrinhoPersonalizadoContainer = (RelativeLayout) findViewById(R.id.CarrinhoPersonalizadoContainer);
-        PaginaTitulo = (TextView) findViewById(R.id.PaginaTitulo);
-        CarrinhoPersonalizadoNumero = (TextView)findViewById(R.id.CarrinhoPersonalizadoNumero);
-
-        PaginaTitulo.setText("Favoritos");
-
-        CarrinhoPersonalizadoContainer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, CarrinhoActivity.class));
-            }
-        });
-    }
-
-    public void verificarPrecoTotalZero(){}
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -275,6 +301,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
         if (id == R.id.Perfil) {
             startActivity(new Intent(MainActivity.this, UsuarioPerfilActivity.class));
+        } else if (id == R.id.MeusPedidos) {
+            startActivity(new Intent(MainActivity.this, CategoriaActivity.class));
+        } else if (id == R.id.Carrinho) {
+            startActivity(new Intent(MainActivity.this, CarrinhoActivity.class));
+        } else if (id == R.id.Frutas) {
+            startActivity(new Intent(MainActivity.this, CategoriaActivity.class));
+        } else if (id == R.id.Vegetais) {
+            startActivity(new Intent(MainActivity.this, CategoriaActivity.class));
+        } else if (id == R.id.Carnes) {
+            startActivity(new Intent(MainActivity.this, CategoriaActivity.class));
         } else if (id == R.id.Sair) {
             VerificarLogout();
 
@@ -311,5 +347,106 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     protected void onStop() {
         super.onStop();
+    }
+
+    private void ObterDadosDoCabecalhoDeNavegacao() {
+        DatabaseReference root = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference m = root.child("usuarios").child(UsuarioId);
+
+        ValueEventListener valueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    String nome = snapshot.child("Nome").getValue().toString();
+                    String foto = snapshot.child("Imagem").getValue().toString();
+
+                    if (foto.equals("default")) {
+                        Picasso.get().load(R.drawable.profile).into(imagem);
+                    } else {
+                        Picasso.get().load(foto).placeholder(R.drawable.profile).into(imagem);
+                        mPessoa_nome.setText(nome);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        };
+        m.addListenerForSingleValueEvent(valueEventListener);
+        RecuperarFavoritos();
+    }
+
+    private void ExibirIconeDoCarrinho() {
+        // Toolbar & Carrinho icone
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(false);
+        actionBar.setDisplayShowCustomEnabled(true);
+
+        LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = inflater.inflate(R.layout.main2_toolbar, null);
+        actionBar.setCustomView(view);
+
+        CarrinhoPersonalizadoContainer = (RelativeLayout) findViewById(R.id.CarrinhoPersonalizadoContainer);
+        PaginaTitulo = (TextView) findViewById(R.id.PaginaTitulo);
+        CarrinhoPersonalizadoNumero = (TextView)findViewById(R.id.CarrinhoPersonalizadoNumero);
+
+        PaginaTitulo.setText("Favoritos");
+        DefinirNumeroItensIconeCarrinho();
+
+        CarrinhoPersonalizadoContainer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, CarrinhoActivity.class));
+            }
+        });
+    }
+
+    private void DefinirNumeroItensIconeCarrinho() {
+        DatabaseReference root = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference m = root.child("carrinho").child(UsuarioId);
+
+        ValueEventListener eventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    if (snapshot.getChildrenCount() == 1) {
+                        CarrinhoPersonalizadoNumero.setVisibility(View.GONE);
+                    } else {
+                        CarrinhoPersonalizadoNumero.setVisibility(View.VISIBLE);
+                        CarrinhoPersonalizadoNumero.setText(String.valueOf(snapshot.getChildrenCount() - 1));
+                    }
+                } else {
+                    CarrinhoPersonalizadoNumero.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        };
+        m.addListenerForSingleValueEvent(eventListener);
+    }
+
+    public void verificarPrecoTotalZero(){
+        DatabaseReference root = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference m = root.child("carrinho").child(UsuarioId);
+
+        ValueEventListener eventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (!snapshot.exists()) {
+                    FirebaseDatabase.getInstance().getReference().child("carrinho").child(UsuarioId).child("pretoTotal").setValue(0);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        };
+        m.addListenerForSingleValueEvent(eventListener);
     }
 }

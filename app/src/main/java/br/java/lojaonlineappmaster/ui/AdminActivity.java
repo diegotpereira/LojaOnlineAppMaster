@@ -59,7 +59,7 @@ public class AdminActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        exibirIconeDoCarrinho();
+        ExibirIconeDoCarrinho();
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener naveListener =
@@ -124,7 +124,7 @@ public class AdminActivity extends AppCompatActivity {
         alerta.show();
     }
 
-    private  void exibirIconeDoCarrinho() {
+    private  void ExibirIconeDoCarrinho() {
         // Toolbar & Carrinho icone
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(false);
