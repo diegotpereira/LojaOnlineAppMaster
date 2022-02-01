@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import br.java.lojaonlineappmaster.Adapter.CarrinhoAdapter;
 import br.java.lojaonlineappmaster.R;
 import br.java.lojaonlineappmaster.model.CarrinhoItemModelo;
-import br.java.lojaonlineappmaster.ui.ui.CarrinhoVerificarActivity;
+import br.java.lojaonlineappmaster.ui.CarrinhoVerificarActivity;
 
 
 public class MeuCarrinhoFragmento extends Fragment {

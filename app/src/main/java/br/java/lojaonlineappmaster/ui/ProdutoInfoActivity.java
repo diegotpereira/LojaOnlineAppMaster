@@ -260,9 +260,6 @@ public class ProdutoInfoActivity extends AppCompatActivity implements Navigation
         AtualizarContainer();
 
         // para verificar se o preço total é zero ou não
-        DefinirNumeroDeItensNoIconeDoCarrinho();
-
-        // para verificar se o preço total é zero ou não
         verificarPrecoTotalZero();
     }
 
@@ -488,33 +485,6 @@ public class ProdutoInfoActivity extends AppCompatActivity implements Navigation
                     } else {
                         CarrinhoPersonalizadoNumero.setVisibility(View.VISIBLE);
                         CarrinhoPersonalizadoNumero.setText(String.valueOf(snapshot.getChildrenCount() - 1));
-                    }
-                } else {
-                    CarrinhoPersonalizadoNumero.setVisibility(View.GONE);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        };
-        m.addListenerForSingleValueEvent(eventListener);
-    }
-
-    private void DefinirNumeroDeItensNoIconeDoCarrinho() {
-        DatabaseReference root = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference m = root.child("carrinho").child(UsuarioId);
-
-        ValueEventListener eventListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    if (snapshot.getChildrenCount() == 1) {
-                        CarrinhoPersonalizadoNumero.setVisibility(View.GONE);
-                    } else {
-                        CarrinhoPersonalizadoNumero.setVisibility(View.VISIBLE);
-                        CarrinhoPersonalizadoNumero.setText(String.valueOf(snapshot.getChildrenCount() -1));
                     }
                 } else {
                     CarrinhoPersonalizadoNumero.setVisibility(View.GONE);
