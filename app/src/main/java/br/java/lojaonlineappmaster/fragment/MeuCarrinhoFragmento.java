@@ -210,7 +210,6 @@ public class MeuCarrinhoFragmento extends Fragment {
 
         precoTotalValor = 0;
         m = root.child("carrinho");
-        m = root.child("carrinho");
 
         ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
@@ -229,7 +228,7 @@ public class MeuCarrinhoFragmento extends Fragment {
                     }
                     root.child("carrinho").child(AtualUsuario).child("precoTotal")
                             .setValue(String.valueOf(precoTotalValor));
-                    precoTotal.setText(String.valueOf(precoTotalValor) + " R$");
+                    precoTotal.setText("R$: " + String.valueOf(precoTotalValor));
                     carrinhoAdapter.notifyDataSetChanged();
                 }
             }

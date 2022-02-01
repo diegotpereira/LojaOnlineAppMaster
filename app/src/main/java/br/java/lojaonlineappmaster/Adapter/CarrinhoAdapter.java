@@ -3,7 +3,6 @@ package br.java.lojaonlineappmaster.Adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -184,8 +183,8 @@ public class CarrinhoAdapter extends RecyclerView.Adapter {
                     produtoPreco.setText("Preço: " + String.valueOf(produtoPrecoTexto *
                             Integer.parseInt(produtoQuantidade.getText().toString())) + " R$");
 
-                    root.child("carrinho").child(AtualUsuario).child("quantidade")
-                            .child("produtoQuantidade").setValue(produtoQuantidade
+                    root.child("carrinho").child(AtualUsuario).child(titulo).child("quantidade")
+                            .setValue(produtoQuantidade
                             .getText().toString());
 
                     contarPrecoTotal();
@@ -201,6 +200,10 @@ public class CarrinhoAdapter extends RecyclerView.Adapter {
 
                         produtoPreco.setText("Preço: " + String.valueOf(produtoPrecoTexto *
                                 Integer.parseInt(produtoQuantidade.getText().toString())));
+
+                        root.child("carrinho").child(AtualUsuario).child(titulo).child("quantidade")
+                                .setValue(produtoQuantidade
+                                        .getText().toString());
 
                         contarPrecoTotal();
                     }
@@ -270,7 +273,7 @@ public class CarrinhoAdapter extends RecyclerView.Adapter {
                     }
                     root.child("carrinho").child(AtualUsuario).child("precoTotal")
                             .setValue(String.valueOf(precoTotalValor));
-                    mListener.atualizarPrecoTotal(String.valueOf(precoTotalValor) + " R$");
+                    mListener.atualizarPrecoTotal(String.valueOf(precoTotalValor));
                 }
             }
 

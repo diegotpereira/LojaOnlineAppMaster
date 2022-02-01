@@ -30,10 +30,6 @@ public class CarrinhoItemModelo {
         this.produtoTitulo = produtoTitulo;
     }
 
-    public static int getCarrinho_item() {
-        return carrinho_item;
-    }
-
     public int getTipo() {
         return tipo;
     }

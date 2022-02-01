@@ -39,7 +39,8 @@ import java.util.HashMap;
 import br.java.lojaonlineappmaster.R;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class ProdutoInfoActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class ProdutoInfoActivity extends AppCompatActivity implements
+        NavigationView.OnNavigationItemSelectedListener{
 
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
@@ -217,12 +218,14 @@ public class ProdutoInfoActivity extends AppCompatActivity implements Navigation
 
                 int PrecoDepoisDaOferta;
 
-                if (EhOferecido.equalsIgnoreCase("Sim")) PrecoDepoisDaOferta = (int) ((Integer.valueOf(ProdutoPreco)) - (Integer.valueOf(ProdutoPreco) * 0.3) );
+                if (EhOferecido.equalsIgnoreCase("Sim")) PrecoDepoisDaOferta =
+                        (int) ((Integer.valueOf(ProdutoPreco)) - (Integer.valueOf(ProdutoPreco) * 0.3) );
                 else PrecoDepoisDaOferta = (int) (Integer.valueOf(ProdutoPreco));
 
                 hashMap.put("produtoPreco", String.valueOf(PrecoDepoisDaOferta));
 
-                DatabaseReference x = FirebaseDatabase.getInstance().getReference().child("carrinho").child(UsuarioId);
+                DatabaseReference x = FirebaseDatabase.getInstance().getReference()
+                        .child("carrinho").child(UsuarioId);
                 x.child(ProdutoNome).setValue(hashMap);
 
                 // Ícone de atualização do carrinho
@@ -235,10 +238,13 @@ public class ProdutoInfoActivity extends AppCompatActivity implements Navigation
                 AddNoCarrinhoContainer.setVisibility(View.VISIBLE);
                 DeletarDoCarrinhoContainer.setVisibility(View.GONE);
 
-                DatabaseReference x = FirebaseDatabase.getInstance().getReference().child("carrinho").child(UsuarioId);
+                DatabaseReference x = FirebaseDatabase.getInstance().getReference()
+                        .child("carrinho").child(UsuarioId);
                 x.child(ProdutoNome).removeValue();
 
-                Toast.makeText(ProdutoInfoActivity.this, "O produto foi excluído com sucesso do seu carrinho", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ProdutoInfoActivity
+                        .this, "O produto foi excluído com sucesso do seu carrinho",
+                        Toast.LENGTH_SHORT).show();
 
                 // Ícone de atualização do carrinho
                 ExibirIconeDoCarrinho();
@@ -292,38 +298,37 @@ public class ProdutoInfoActivity extends AppCompatActivity implements Navigation
         ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot dataSnapshot : snapshot.child("Frutas").getChildren()) {
-                    if (snapshot.getKey().equals(ProdutoNome)) {
-                        PCategoria.setText("Categoria: Frutas");
-                        PMontante.setText("Quantidade Disponível: " + dataSnapshot.child("quantidade").getValue());
-                        break;
+                if (snapshot.exists()) {
+                    for(DataSnapshot dataSnapshot : snapshot.child("Frutas").getChildren()) {
+                        if (dataSnapshot.getKey().equals(ProdutoNome)) {
+                            PCategoria.setText("Categoria: Frutas");
+                            PMontante.setText("Quantidade Disponível: " + dataSnapshot.child("quantidade").getValue());
+                            break;
+                        }
                     }
-                }
+                    for(DataSnapshot dataSnapshot : snapshot.child("Eletronicos").getChildren()) {
+                        if (dataSnapshot.getKey().equals(ProdutoNome)) {
+                            PCategoria.setText("Categoria: Eletrônicos");
+                            PMontante.setText("Quantidade Disponível: " + dataSnapshot.child("quantidade").getValue());
 
-                for(DataSnapshot dataSnapshot : snapshot.child("Eletronicos").getChildren()) {
-                    if (snapshot.getKey().equals(ProdutoNome)) {
-                        PCategoria.setText("Categoria: Eletrônicos");
-                        PMontante.setText("Quantidade Disponível: " + dataSnapshot.child("quantidade").getValue());
-
-                        break;
+                            break;
+                        }
                     }
-                }
+                    for(DataSnapshot dataSnapshot : snapshot.child("Carnes").getChildren()) {
+                        if (dataSnapshot.getKey().equals(ProdutoNome)) {
+                            PCategoria.setText("Categoria: Carnes");
+                            PMontante.setText("Quantidade Disponível: " + dataSnapshot.child("quantidade").getValue());
 
-                for(DataSnapshot dataSnapshot : snapshot.child("Carnes").getChildren()) {
-                    if (snapshot.getKey().equals(ProdutoNome)) {
-                        PCategoria.setText("Categoria: Carnes");
-                        PMontante.setText("Quantidade Disponível: " + dataSnapshot.child("quantidade").getValue());
-
-                        break;
+                            break;
+                        }
                     }
-                }
+                    for(DataSnapshot dataSnapshot : snapshot.child("Vegetais").getChildren()) {
+                        if (dataSnapshot.getKey().equals(ProdutoNome)) {
+                            PCategoria.setText("Categoria: Vegetais");
+                            PMontante.setText("Quantidade Disponível: " + dataSnapshot.child("quantidade").getValue());
 
-                for(DataSnapshot dataSnapshot : snapshot.child("Vegetais").getChildren()) {
-                    if (snapshot.getKey().equals(ProdutoNome)) {
-                        PCategoria.setText("Categoria: Vegetais");
-                        PMontante.setText("Quantidade Disponível: " + dataSnapshot.child("quantidade").getValue());
-
-                        break;
+                            break;
+                        }
                     }
                 }
             }
@@ -393,13 +398,14 @@ public class ProdutoInfoActivity extends AppCompatActivity implements Navigation
 
         if(id==R.id.Home){
             startActivity(new Intent(ProdutoInfoActivity.this,MainActivity.class));
-        }
-        if (id == R.id.Perfil) {
+        }else if (id == R.id.Perfil) {
             startActivity(new Intent(ProdutoInfoActivity.this, UsuarioPerfilActivity.class));
-        } else if (id == R.id.MeusPedidos) {
-            startActivity(new Intent(ProdutoInfoActivity.this, CategoriaActivity.class));
+        } else if(id == R.id.Favoritos){
+            startActivity(new Intent(ProdutoInfoActivity.this, FavoritosActivity.class));
         } else if (id == R.id.Carrinho) {
             startActivity(new Intent(ProdutoInfoActivity.this, CarrinhoActivity.class));
+        } else if (id == R.id.MeusPedidos) {
+            startActivity(new Intent(ProdutoInfoActivity.this, CategoriaActivity.class));
         } else if (id == R.id.Frutas) {
             Intent intent = new Intent(ProdutoInfoActivity.this, CategoriaActivity.class);
             intent.putExtra("Categoria Nome", "Frutas");

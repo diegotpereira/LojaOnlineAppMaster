@@ -95,13 +95,14 @@ public class CarrinhoActivity extends AppCompatActivity implements
 
         if(id==R.id.Home){
             startActivity(new Intent(CarrinhoActivity.this,MainActivity.class));
-        }
-        if (id == R.id.Perfil) {
+        }else if (id == R.id.Perfil) {
             startActivity(new Intent(CarrinhoActivity.this, UsuarioPerfilActivity.class));
-        } else if (id == R.id.MeusPedidos) {
-            startActivity(new Intent(CarrinhoActivity.this, CategoriaActivity.class));
+        } else if(id == R.id.Favoritos){
+            startActivity(new Intent(CarrinhoActivity.this, FavoritosActivity.class));
         } else if (id == R.id.Carrinho) {
             startActivity(new Intent(CarrinhoActivity.this, CarrinhoActivity.class));
+        } else if (id == R.id.MeusPedidos) {
+            startActivity(new Intent(CarrinhoActivity.this, CategoriaActivity.class));
         } else if (id == R.id.Frutas) {
             Intent intent = new Intent(CarrinhoActivity.this, CategoriaActivity.class);
             intent.putExtra("Categoria Nome", "Frutas");
