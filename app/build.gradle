@@ -55,4 +55,7 @@ dependencies {
 
     //(Picasso Library)download image from storage database
     implementation 'com.squareup.picasso:picasso:2.71828'
+
+    implementation 'com.budiyev.android:code-scanner:2.1.0'
+    implementation 'com.karumi:dexter:6.0.0'
 }

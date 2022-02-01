@@ -44,7 +44,7 @@ public class PedidoFragmento extends Fragment {
     private DatabaseReference m;
     private String AtualUsuario;
 
-    private static Activity fa;
+    public static Activity fa;
 
 
     public PedidoFragmento() {
