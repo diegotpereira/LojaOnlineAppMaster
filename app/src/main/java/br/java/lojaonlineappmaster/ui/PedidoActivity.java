@@ -13,14 +13,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -32,157 +29,52 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-
 import br.java.lojaonlineappmaster.R;
+import br.java.lojaonlineappmaster.fragment.PedidoFragmento;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class CarrinhoVerificarActivity extends AppCompatActivity implements
+public class PedidoActivity extends AppCompatActivity implements
         NavigationView.OnNavigationItemSelectedListener {
-
-    String ttlPreco;
-    String DelPreco;
-    String ttlPreco2;
-    String salvo;
-    String AtualUsuario;
-
-    TextView precoTotal;
-    TextView precoEntrega;
-    TextView precoTotal2;
-    TextView quantidadeSalva;
 
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private ActionBarDrawerToggle mToggle;
     private Toolbar mToolbar;
+
     private TextView mPessoa_nome;
     private CircleImageView mPessoa_imagem;
 
-    DatabaseReference root;
     private FirebaseAuth mAuth;
-    private FirebaseUser AtualUsr;
+    private FirebaseUser AtualUsuario;
     private String UsuarioId;
 
     private RelativeLayout CarrinhoPersonalizadoContainer;
     private TextView PaginaTitulo;
     private TextView CarrinhoPersonalizadoNumero;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_carrinho_verificar);
+        setContentView(R.layout.activity_pedido);
 
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.pedido_frame, new PedidoFragmento()).commit();
         mAuth = FirebaseAuth.getInstance();
-        AtualUsr = mAuth.getCurrentUser();
-        UsuarioId = AtualUsr.getUid();
+        AtualUsuario = mAuth.getCurrentUser();
+        UsuarioId = AtualUsuario.getUid();
 
-        mToolbar = (Toolbar) findViewById(R.id.carrinhoVerificaToolbar);
+        mToolbar = (Toolbar) findViewById(R.id.pedido_toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        Button Concluir = findViewById(R.id.Concluir);
-        Button Cancelar = findViewById(R.id.Cancelar);
-        precoTotal = findViewById(R.id.total_preco_item);
-        precoEntrega = findViewById(R.id.preco_de_entrega);
-        precoTotal2 = findViewById(R.id.preco_total);
-        quantidadeSalva = findViewById(R.id.quantidade_salva);
-
-        Concluir.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                salvoData();
-                CarrinhoActivity.fa.finish();
-                finish();
-            }
-        });
-        Cancelar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
-        obterDadosDeVerificacao();
-    }
-
-    private void obterDadosDeVerificacao() {
-        DatabaseReference root = FirebaseDatabase.getInstance().getReference();
-        FirebaseAuth mAuth;
-
-        mAuth = FirebaseAuth.getInstance();
-        String AtualUsuario = mAuth.getCurrentUser().getUid();
-        DatabaseReference m = root.child("carrinho").child(AtualUsuario);
-
-        ValueEventListener valueEventListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    ttlPreco = snapshot.child("precoTotal").getValue().toString();
-                    Log.d("ttl", ttlPreco);
-                    precoTotal.setText(ttlPreco);
-                    precoEntrega.setText("Livre");
-                    precoTotal2.setText(ttlPreco);
-                    quantidadeSalva.setVisibility(View.INVISIBLE);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        };
-        m.addListenerForSingleValueEvent(valueEventListener);
-    }
-
-    private void salvoData() {
-        root = FirebaseDatabase.getInstance().getReference();
-        FirebaseAuth mAuth;
-        mAuth = FirebaseAuth.getInstance();
-        AtualUsuario = mAuth.getCurrentUser().getUid();
-
-        DatabaseReference x = root.child("carrinho").child(AtualUsuario);
-
-        x.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                FirebaseDatabase t = FirebaseDatabase.getInstance();
-                String chave = t.getReference("pedido").push().getKey();
-
-                root.child("pedido").child(AtualUsuario).child(chave).child("produtosPedido").setValue(snapshot.getValue());
-                root.child("pedido").child(AtualUsuario).child(chave).child("precoTotal").setValue(snapshot.child("precoTotal").getValue());
-
-                root.child("pedido").child(AtualUsuario).child(chave).child("produtosPedido").child("precoTotal").removeValue();
-
-                root.child("pedido").child(AtualUsuario).child(chave).child("Data")
-                        .setValue(String.valueOf(new SimpleDateFormat("dd MMM yyyy hh:mm a")
-                                .format(Calendar.getInstance().getTime())));
-
-                root.child("pedido").child(AtualUsuario).child(chave).child("EhVerificado")
-                        .setValue("false");
-
-                Toast.makeText(getApplicationContext(), "Conferido & concluído",
-                        Toast.LENGTH_LONG).show();
-
-                root.child("carrinho").child(AtualUsuario).removeValue();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+        drawerLayout = (DrawerLayout) findViewById(R.id.pedido_drawer);
+        navigationView = (NavigationView) findViewById(R.id.pedido_navigation_viewer);
 
-        drawerLayout = (DrawerLayout) findViewById(R.id.carrinhoVerificarDrawer);
-        navigationView = (NavigationView) findViewById(R.id.carrinhoVerificarNavigationViewer);
-
-        // Navegação do Cabeçalho
+        // Cabeçalho Navegação
         navigationView.setNavigationItemSelectedListener(this);
         View view = navigationView.getHeaderView(0);
         mPessoa_nome = view.findViewById(R.id.pessoanome);
@@ -197,13 +89,13 @@ public class CarrinhoVerificarActivity extends AppCompatActivity implements
         ExibirIconeDoCarrinho();
 
         verificarPrecoTotalZero();
-
     }
 
     private void obterDadosDoCabecalhoSeNavegacao() {
         FirebaseAuth mAuth;
         mAuth = FirebaseAuth.getInstance();
-        AtualUsuario = mAuth.getCurrentUser().getUid();
+        String AtualUsuario = mAuth.getCurrentUser().getUid();
+
         DatabaseReference root = FirebaseDatabase.getInstance().getReference();
         DatabaseReference m = root.child("usuarios").child(AtualUsuario);
 
@@ -242,31 +134,27 @@ public class CarrinhoVerificarActivity extends AppCompatActivity implements
         int id = item.getItemId();
 
         if(id==R.id.Home){
-            startActivity(new Intent(CarrinhoVerificarActivity.this,MainActivity.class));
+            startActivity(new Intent(PedidoActivity.this,MainActivity.class));
         }else if (id == R.id.Perfil) {
-            startActivity(new Intent(CarrinhoVerificarActivity.this, UsuarioPerfilActivity.class));
+            startActivity(new Intent(PedidoActivity.this, UsuarioPerfilActivity.class));
         } else if(id == R.id.Favoritos){
-            startActivity(new Intent(CarrinhoVerificarActivity.this, FavoritosActivity.class));
+            startActivity(new Intent(PedidoActivity.this, FavoritosActivity.class));
         } else if (id == R.id.Carrinho) {
-            startActivity(new Intent(CarrinhoVerificarActivity.this, CarrinhoActivity.class));
-        } else if (id == R.id.MeusPedidos) {
-            startActivity(new Intent(CarrinhoVerificarActivity.this, PedidoActivity.class));
-        } else if(id == R.id.Favoritos){
-            startActivity(new Intent(CarrinhoVerificarActivity.this, FavoritosActivity.class));
+            startActivity(new Intent(PedidoActivity.this, CarrinhoActivity.class));
         } else if (id == R.id.Frutas) {
-            Intent intent = new Intent(CarrinhoVerificarActivity.this, CategoriaActivity.class);
+            Intent intent = new Intent(PedidoActivity.this, CategoriaActivity.class);
             intent.putExtra("Categoria Nome", "Frutas");
             startActivity(intent);
         } else if (id == R.id.Vegetais) {
-            Intent intent = new Intent(CarrinhoVerificarActivity.this, CategoriaActivity.class);
+            Intent intent = new Intent(PedidoActivity.this, CategoriaActivity.class);
             intent.putExtra("Categoria Nome", "Vegetais");
             startActivity(intent);
         } else if (id == R.id.Carnes) {
-            Intent intent = new Intent(CarrinhoVerificarActivity.this, CategoriaActivity.class);
+            Intent intent = new Intent(PedidoActivity.this, CategoriaActivity.class);
             intent.putExtra("Categoria Nome", "Carnes");
             startActivity(intent);
         } else if (id == R.id.Eletronicos) {
-            Intent intent = new Intent(CarrinhoVerificarActivity.this, CategoriaActivity.class);
+            Intent intent = new Intent(PedidoActivity.this, CategoriaActivity.class);
             intent.putExtra("Categoria Nome", "Eletronicos");
             startActivity(intent);
         } else if (id == R.id.Sair) {
@@ -278,13 +166,13 @@ public class CarrinhoVerificarActivity extends AppCompatActivity implements
 
 
     private void VerificarLogout() {
-        AlertDialog.Builder verifiqueAlerta = new AlertDialog.Builder(CarrinhoVerificarActivity.this);
+        AlertDialog.Builder verifiqueAlerta = new AlertDialog.Builder(PedidoActivity.this);
         verifiqueAlerta.setMessage("Deseja sair?")
                 .setCancelable(false).setPositiveButton("Sim", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 FirebaseAuth.getInstance().signOut();
-                Intent intent = new Intent(CarrinhoVerificarActivity.this, EntrarActivity.class);
+                Intent intent = new Intent(PedidoActivity.this, EntrarActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -303,7 +191,7 @@ public class CarrinhoVerificarActivity extends AppCompatActivity implements
         // Toolbar & CarrinhoIcone
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setDisplayShowCustomEnabled(true);
 
 
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -321,7 +209,7 @@ public class CarrinhoVerificarActivity extends AppCompatActivity implements
         CarrinhoPersonalizadoNumero.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(CarrinhoVerificarActivity.this, CarrinhoActivity.class));
+                startActivity(new Intent(PedidoActivity.this, CarrinhoActivity.class));
             }
         });
     }

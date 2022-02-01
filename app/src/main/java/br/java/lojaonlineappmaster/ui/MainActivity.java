@@ -430,10 +430,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (id == R.id.Perfil) {
             startActivity(new Intent(MainActivity.this, UsuarioPerfilActivity.class));
-        } else if (id == R.id.MeusPedidos) {
-            startActivity(new Intent(MainActivity.this, CategoriaActivity.class));
+
         } else if (id == R.id.Carrinho) {
             startActivity(new Intent(MainActivity.this, CarrinhoActivity.class));
+
+        } else if (id == R.id.MeusPedidos) {
+            startActivity(new Intent(MainActivity.this, PedidoActivity.class));
+
         } else if (id == R.id.Frutas) {
             Intent intent = new Intent(MainActivity.this, CategoriaActivity.class);
             intent.putExtra("Categoria Nome", "Frutas");

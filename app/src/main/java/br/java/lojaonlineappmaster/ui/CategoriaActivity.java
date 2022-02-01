@@ -247,12 +247,14 @@ public class CategoriaActivity extends AppCompatActivity implements
         if (id == R.id.Perfil) {
             startActivity(new Intent(CategoriaActivity.this, UsuarioPerfilActivity.class));
 
-        } else if (id == R.id.MeusPedidos) {
-            startActivity(new Intent(CategoriaActivity.this, CategoriaActivity.class));
-
         } else if (id == R.id.Carrinho) {
             startActivity(new Intent(CategoriaActivity.this, CarrinhoActivity.class));
 
+        } else if (id == R.id.MeusPedidos) {
+            startActivity(new Intent(CategoriaActivity.this, PedidoActivity.class));
+
+        } else if(id == R.id.Favoritos){
+            startActivity(new Intent(CategoriaActivity.this, FavoritosActivity.class));
         } else if (id == R.id.Frutas) {
             CategoriaNome = "Frutas";
             definirDadosCategoria();

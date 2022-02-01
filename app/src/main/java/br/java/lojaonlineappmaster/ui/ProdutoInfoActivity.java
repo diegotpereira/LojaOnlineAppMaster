@@ -405,7 +405,7 @@ public class ProdutoInfoActivity extends AppCompatActivity implements
         } else if (id == R.id.Carrinho) {
             startActivity(new Intent(ProdutoInfoActivity.this, CarrinhoActivity.class));
         } else if (id == R.id.MeusPedidos) {
-            startActivity(new Intent(ProdutoInfoActivity.this, CategoriaActivity.class));
+            startActivity(new Intent(ProdutoInfoActivity.this, PedidoActivity.class));
         } else if (id == R.id.Frutas) {
             Intent intent = new Intent(ProdutoInfoActivity.this, CategoriaActivity.class);
             intent.putExtra("Categoria Nome", "Frutas");

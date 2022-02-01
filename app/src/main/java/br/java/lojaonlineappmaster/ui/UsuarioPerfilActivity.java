@@ -151,9 +151,11 @@ public class UsuarioPerfilActivity extends AppCompatActivity implements
         if (id == R.id.Perfil) {
             startActivity(new Intent(UsuarioPerfilActivity.this, UsuarioPerfilActivity.class));
         } else if (id == R.id.MeusPedidos) {
-            startActivity(new Intent(UsuarioPerfilActivity.this, CategoriaActivity.class));
+            startActivity(new Intent(UsuarioPerfilActivity.this, PedidoActivity.class));
         } else if (id == R.id.Carrinho) {
             startActivity(new Intent(UsuarioPerfilActivity.this, CarrinhoActivity.class));
+        } else if(id == R.id.Favoritos){
+            startActivity(new Intent(UsuarioPerfilActivity.this, FavoritosActivity.class));
         } else if (id == R.id.Frutas) {
             Intent intent = new Intent(UsuarioPerfilActivity.this, CategoriaActivity.class);
             intent.putExtra("Categoria Nome", "Frutas");

@@ -10,6 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name=".ui.PedidoActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.ScannerQRCodeActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.CarrinhoVerificarActivity"
             android:exported="false" />
         <activity
