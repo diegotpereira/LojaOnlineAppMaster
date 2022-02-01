@@ -122,7 +122,7 @@ public class CarrinhoVerificarActivity extends AppCompatActivity implements
                     Log.d("ttl", ttlPreco);
                     precoTotal.setText(ttlPreco);
                     precoEntrega.setText("Livre");
-                    precoTotal2.setVisibility(View.VISIBLE);
+                    precoTotal2.setText(ttlPreco);
                     quantidadeSalva.setVisibility(View.INVISIBLE);
                 }
             }
@@ -150,7 +150,7 @@ public class CarrinhoVerificarActivity extends AppCompatActivity implements
                 String chave = t.getReference("pedido").push().getKey();
 
                 root.child("pedido").child(AtualUsuario).child(chave).child("produtosPedidos").setValue(snapshot.getValue());
-                root.child("pedido").child(AtualUsuario).child(chave).child("precoTotal").setValue(snapshot.getValue());
+                root.child("pedido").child(AtualUsuario).child(chave).child("precoTotal").setValue(snapshot.child("precoTotal").getValue());
 
                 root.child("pedido").child(AtualUsuario).child(chave).child("produtosPedidos").child("precoTotal").removeValue();
 
@@ -243,13 +243,14 @@ public class CarrinhoVerificarActivity extends AppCompatActivity implements
 
         if(id==R.id.Home){
             startActivity(new Intent(CarrinhoVerificarActivity.this,MainActivity.class));
-        }
-        if (id == R.id.Perfil) {
+        }else if (id == R.id.Perfil) {
             startActivity(new Intent(CarrinhoVerificarActivity.this, UsuarioPerfilActivity.class));
-        } else if (id == R.id.MeusPedidos) {
-            startActivity(new Intent(CarrinhoVerificarActivity.this, CategoriaActivity.class));
+        } else if(id == R.id.Favoritos){
+            startActivity(new Intent(CarrinhoVerificarActivity.this, FavoritosActivity.class));
         } else if (id == R.id.Carrinho) {
             startActivity(new Intent(CarrinhoVerificarActivity.this, CarrinhoActivity.class));
+        } else if (id == R.id.MeusPedidos) {
+            startActivity(new Intent(CarrinhoVerificarActivity.this, CategoriaActivity.class));
         } else if (id == R.id.Frutas) {
             Intent intent = new Intent(CarrinhoVerificarActivity.this, CategoriaActivity.class);
             intent.putExtra("Categoria Nome", "Frutas");
