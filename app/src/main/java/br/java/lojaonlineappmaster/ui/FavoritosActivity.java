@@ -69,7 +69,7 @@ public class FavoritosActivity extends AppCompatActivity implements NavigationVi
         atualUsuario = mAuth.getCurrentUser();
         UsuarioId = atualUsuario.getUid();
 
-        mToolbar = findViewById(R.id.main_TooBar);
+        mToolbar = findViewById(R.id.main_Toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -224,7 +224,7 @@ public class FavoritosActivity extends AppCompatActivity implements NavigationVi
     private  void ExibirIconeDoCarrinho() {
         // Toolbar & Carrinho icone
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(false);
+        actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowCustomEnabled(true);
 
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
