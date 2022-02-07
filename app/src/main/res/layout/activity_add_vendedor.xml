@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.AddSalesMan">
+
+    <include layout="@layout/main2_toolbar"
+        android:id="@+id/add_vendedor_toolbar"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/add_vendedor_toolbar">
+
+        <ImageView
+            android:id="@+id/vendedor_imagem"
+            android:layout_width="0dp"
+            android:layout_height="250dp"
+            android:layout_marginStart="64dp"
+            android:layout_marginLeft="64dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="64dp"
+            android:layout_marginRight="64dp"
+            android:src="@drawable/add_salesmen"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/editar_texto_vendedor_nomeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginLeft="32dp"
+            android:layout_marginTop="38dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginRight="32dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/vendedor_imagem"
+            android:background="@drawable/stroke_button">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editar_texto_vendedor_nome"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="SalesMan Name"
+                android:paddingBottom="5dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="10dp"
+                android:background="@android:color/transparent"
+                android:inputType="textPersonName"
+                android:textColor="@android:color/black"
+                android:textColorHint="@android:color/darker_gray" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/editar_texto_vendedor_salarioLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginLeft="32dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginRight="32dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editar_texto_vendedor_nomeLayout"
+            android:background="@drawable/stroke_button">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editar_texto_vendedor_salario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Salary"
+                android:inputType="number"
+                android:textColor="@android:color/black"
+                android:textColorHint="@android:color/darker_gray"
+                android:paddingBottom="5dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="10dp"
+                android:background="@android:color/transparent"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_add_vendedor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginLeft="32dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginRight="32dp"
+            android:layout_marginBottom="32dp"
+            android:text="Add"
+            android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_escolher_vendedor_imagem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:layout_marginRight="32dp"
+            android:layout_marginBottom="32dp"
+            android:text="Choose Image"
+            android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</RelativeLayout>
