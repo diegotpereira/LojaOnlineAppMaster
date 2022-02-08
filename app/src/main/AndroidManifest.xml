@@ -18,7 +18,7 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".ui.AdminOfertaActivity"
+            android:name=".ui.AddOfertaActivity"
             android:exported="false"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

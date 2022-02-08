@@ -31,7 +31,7 @@ import java.util.List;
 import br.java.lojaonlineappmaster.Adapter.AdminOfertaAdapter;
 import br.java.lojaonlineappmaster.R;
 import br.java.lojaonlineappmaster.model.AdminOferta;
-import br.java.lojaonlineappmaster.ui.AdminOfertaActivity;
+import br.java.lojaonlineappmaster.ui.AddOfertaActivity;
 import br.java.lojaonlineappmaster.ui.EditarOfertaActivity;
 
 public class OfertaFragmento extends Fragment {
@@ -163,7 +163,7 @@ public class OfertaFragmento extends Fragment {
         OfertaFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getActivity(), AdminOfertaActivity.class));
+                startActivity(new Intent(getActivity(), AddOfertaActivity.class));
             }
         });
         // Inflate the layout for this fragment

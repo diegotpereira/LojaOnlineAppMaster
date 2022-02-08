@@ -40,7 +40,7 @@ import com.squareup.picasso.Picasso;
 import br.java.lojaonlineappmaster.R;
 import br.java.lojaonlineappmaster.model.Oferta;
 
-public class AdminOfertaActivity extends AppCompatActivity {
+public class AddOfertaActivity extends AppCompatActivity {
 
     private TextInputEditText nome;
     private TextInputEditText descricao;
@@ -64,7 +64,7 @@ public class AdminOfertaActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_admin_oferta);
+        setContentView(R.layout.activity_add_oferta);
 
         // Toolbar
         mToolbar = (Toolbar) findViewById(R.id.add_oferta_toolbar);
@@ -154,21 +154,21 @@ public class AdminOfertaActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (mEnviarTarefa != null && mEnviarTarefa.isInProgress())
-                    Toast.makeText(AdminOfertaActivity.this, "O carregamento está em andamento", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddOfertaActivity.this, "O carregamento está em andamento", Toast.LENGTH_SHORT).show();
                 else if (nome.getText().toString().isEmpty() || descricao.getText().toString().isEmpty() || imgUri == null) {
 
-                    Toast.makeText(AdminOfertaActivity.this, "Células vazias", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AddOfertaActivity.this, "Células vazias", Toast.LENGTH_SHORT).show();
                 } else {
 
                     try {
 
                         carregarDados();
 
-                        Toast.makeText(AdminOfertaActivity.this, "Adicionado com sucesso", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AddOfertaActivity.this, "Adicionado com sucesso", Toast.LENGTH_SHORT).show();
                         finish();
                     } catch (Exception e) {
 
-                        Toast.makeText(AdminOfertaActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AddOfertaActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -195,7 +195,7 @@ public class AdminOfertaActivity extends AppCompatActivity {
                  descricao.getText().toString().isEmpty()||
         imgUri == null) {
 
-            Toast.makeText(AdminOfertaActivity.this, "Células vazias", Toast.LENGTH_SHORT).show();
+            Toast.makeText(AddOfertaActivity.this, "Células vazias", Toast.LENGTH_SHORT).show();
         } else {
             carregarImagem();
         }

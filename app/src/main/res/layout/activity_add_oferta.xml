@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.AdminOfertaActivity">
+    tools:context=".ui.AddOfertaActivity">
 
     <include layout="@layout/main2_toolbar"
         android:id="@+id/add_oferta_toolbar"/>
