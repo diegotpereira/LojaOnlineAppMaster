@@ -9,15 +9,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:id="@+id/salesManProgressBar"/>
+        android:id="@+id/vendedor_progress_bar"/>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/SalesMenRecycler"
+        android:id="@+id/vendedor_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/SalesFloatingBtnId"
+        android:id="@+id/vendedor_floating_btn_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_baseline_add_24"

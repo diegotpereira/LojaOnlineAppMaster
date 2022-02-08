@@ -24,6 +24,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import br.java.lojaonlineappmaster.fragment.OfertasFragmento;
 import br.java.lojaonlineappmaster.fragment.ProdutosFragmento;
 import br.java.lojaonlineappmaster.R;
+import br.java.lojaonlineappmaster.fragment.VendedorFragmento;
 
 public class AdminActivity extends AppCompatActivity {
 
@@ -50,6 +51,8 @@ public class AdminActivity extends AppCompatActivity {
         FragmentoTitulo = (TextView) findViewById(R.id.FragmentoTitulo);
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.Bottom_view);
 
+        bottomNavigationView.setOnNavigationItemSelectedListener(naveListener);
+
         //
         getSupportFragmentManager().beginTransaction().replace(R.id.FrameLayout, new ProdutosFragmento()).commit();
         FragmentoTitulo.setText("Todos os Produtos");
@@ -66,6 +69,7 @@ public class AdminActivity extends AppCompatActivity {
         new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
                 Fragment FragmentoSelecionado = null;
                 int id = item.getItemId();
 
@@ -78,6 +82,7 @@ public class AdminActivity extends AppCompatActivity {
                     FragmentoTitulo.setText("todas as Ofertas");
 
                 } else if (id == R.id.VendedorID) {
+                    FragmentoSelecionado = new VendedorFragmento();
                     FragmentoTitulo.setText("Todos os vendedores");
                 }
                 getSupportFragmentManager().beginTransaction().replace(R.id.FrameLayout, FragmentoSelecionado).commit();
