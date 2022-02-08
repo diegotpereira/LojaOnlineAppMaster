@@ -21,7 +21,7 @@ import android.widget.TextView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
-import br.java.lojaonlineappmaster.fragment.OfertasFragmento;
+import br.java.lojaonlineappmaster.fragment.OfertaFragmento;
 import br.java.lojaonlineappmaster.fragment.ProdutosFragmento;
 import br.java.lojaonlineappmaster.R;
 import br.java.lojaonlineappmaster.fragment.VendedorFragmento;
@@ -78,7 +78,7 @@ public class AdminActivity extends AppCompatActivity {
                     FragmentoTitulo.setText("Todos os produtos");
 
                 } else if (id == R.id.OfertasID) {
-                    FragmentoSelecionado = new OfertasFragmento();
+                    FragmentoSelecionado = new OfertaFragmento();
                     FragmentoTitulo.setText("todas as Ofertas");
 
                 } else if (id == R.id.VendedorID) {

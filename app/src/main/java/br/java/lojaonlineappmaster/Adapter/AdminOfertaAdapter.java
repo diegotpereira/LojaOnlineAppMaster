@@ -35,11 +35,11 @@ public class AdminOfertaAdapter extends RecyclerView.Adapter<AdminOfertaAdapter.
         void onItemLongClick(int pos);
     }
 
-    public void setItemListener(onItemClickListener itemListener) {
+    public void setOnItemClickListener(onItemClickListener itemListener) {
         this.itemListener = itemListener;
     }
 
-    public void setLongListener(onLongClickListener longListener) {
+    public void setOnLongClickListener(onLongClickListener longListener) {
         this.longListener = longListener;
     }
 
