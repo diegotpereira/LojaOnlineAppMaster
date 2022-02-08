@@ -1,16 +1,27 @@
 package br.java.lojaonlineappmaster.ui;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.Activity;
+import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
+import android.view.Display;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
+import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -21,15 +32,19 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 
+import androidmads.library.qrgenearator.QRGContents;
+import androidmads.library.qrgenearator.QRGEncoder;
 import br.java.lojaonlineappmaster.R;
 
 public class AddVendedorActivity extends AppCompatActivity {
@@ -43,8 +58,8 @@ public class AddVendedorActivity extends AppCompatActivity {
     private StorageReference mStorageRef;
     private DatabaseReference mDataBaseRef;
     private StorageTask mEnviarTarefa;
-    private TextInputEditText nomeLayout;
-    private TextInputEditText salarioLayout;
+    private TextInputLayout nomeLayout;
+    private TextInputLayout salarioLayout;
     private Toolbar mToolbar;
     private RelativeLayout CarrinhoPersonalizadoContainer;
     private TextView PaginaTitulo;
@@ -172,7 +187,9 @@ public class AddVendedorActivity extends AppCompatActivity {
 
     @Override
     protected void onStart() {
+
         super.onStart();
+        NaoExibirIconeCarrinho();
     }
 
     public void carregarDados() {
@@ -242,5 +259,59 @@ public class AddVendedorActivity extends AppCompatActivity {
 
     public void abrirImagem() {
         Intent i = new Intent();
+        i.setType("image/*");
+        i.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(i, RegistrarActivity.GALERIA_FOTO);
+    }
+
+    public String getFileExtension(Uri uri) {
+        ContentResolver contentResolver = getContentResolver();
+        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
+
+        return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
+    }
+
+    public Bitmap QrGenerate(String x) {
+        WindowManager manager = (WindowManager) getSystemService(WINDOW_SERVICE);
+        Display display = manager.getDefaultDisplay();
+        Point point = new Point();
+        display.getSize(point);
+        int width = point.x;
+        int height = point.y;
+        int smallerDimension = width < height ? width : height;
+        smallerDimension = smallerDimension * 2 / 4;
+        QRGEncoder encoder = new QRGEncoder(x, null, QRGContents.Type.TEXT, smallerDimension);
+
+        return encoder.getBitmap();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RegistrarActivity.GALERIA_FOTO && resultCode == Activity.RESULT_OK && data.getData() != null && data != null) {
+            imgUri = data.getData();
+
+            try {
+                Picasso.get().load(imgUri).fit().centerCrop().into(img);
+            } catch (Exception e) {
+                Log.e(this.toString(), e.getMessage().toString());
+            }
+        }
+    }
+
+    private void NaoExibirIconeCarrinho() {
+        // Toolbar && Icone Carrinho
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayShowCustomEnabled(true);
+
+        LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = inflater.inflate(R.layout.main2_toolbar, null);
+
+        CarrinhoPersonalizadoContainer = (RelativeLayout) findViewById(R.id.CarrinhoPersonalizadoContainer);
+        PaginaTitulo = (TextView) findViewById(R.id.PaginaTitulo);
+        PaginaTitulo.setVisibility(View.GONE);
+
+        CarrinhoPersonalizadoContainer.setVisibility(View.GONE);
     }
 }
