@@ -100,6 +100,8 @@ public class AddVendedorActivity extends AppCompatActivity {
                     Toast.makeText(AddVendedorActivity.this, "Células vazias", Toast.LENGTH_SHORT).show();
                 } else {
 
+                    carregarDados();
+                    carregarQr();
                     Toast.makeText(AddVendedorActivity.this, "Carregado com sucesso", Toast.LENGTH_SHORT).show();
                     finish();
                 }
@@ -109,7 +111,7 @@ public class AddVendedorActivity extends AppCompatActivity {
         escolher.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                abrirImagem();
             }
         });
 
