@@ -4,13 +4,18 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
+import com.squareup.picasso.Picasso;
 
+import java.util.Collections;
 import java.util.List;
 
 import br.java.lojaonlineappmaster.R;
@@ -32,14 +37,24 @@ public class AdminVendedorAdapter extends RecyclerView.Adapter<AdminVendedorAdap
         void onItemLongClick(int pos);
     }
 
-    public void setOnItemClickListener(AdminOfertaAdapter.onItemClickListener itemListener) {
-        this.itemListener = itemListener;
+    public void setOnItemClickListener(AdminOfertaAdapter.onItemClickListener listener) {
+        itemListener = listener;
     }
 
     public void setOnLongClickListener(AdminOfertaAdapter.onLongClickListener listener) {
         longListener = listener;
     }
 
+    public AdminVendedorAdapter(Context context, List<AdminVendedor> vendedorLista) {
+        this.context = context;
+        this.vendedorLista = vendedorLista;
+    }
+
+    public void addList(List<AdminVendedor> lista) {
+        vendedorLista.clear();
+        Collections.copy(vendedorLista, lista);
+        this.notifyDataSetChanged();
+    }
 
     @NonNull
     @Override
@@ -52,14 +67,21 @@ public class AdminVendedorAdapter extends RecyclerView.Adapter<AdminVendedorAdap
     @Override
     public void onBindViewHolder(@NonNull VendedorViewHolder holder, int position) {
 
+        holder.img.setAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_transition_animation));
+        holder.cardView.setAnimation(AnimationUtils.loadAnimation(context, R.anim.fade_scale_animation));
+
+        Picasso.get().load(vendedorLista.get(position).getImg()).centerCrop().fit().into(holder.img);
+
+        holder.nome.setText("Nome: " + vendedorLista.get(position).getNome());
+        holder.salario.setText("Sálario: " + vendedorLista.get(position).getSalario() + " R$");
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return vendedorLista.size();
     }
 
-    public class VendedorViewHolder extends RecyclerView.ViewHolder{
+    public static class VendedorViewHolder extends RecyclerView.ViewHolder{
 
         ImageView img;
         TextView nome;
@@ -67,7 +89,7 @@ public class AdminVendedorAdapter extends RecyclerView.Adapter<AdminVendedorAdap
         CardView cardView;
 
         public VendedorViewHolder(@NonNull View itemView,
-                                  final AdminOfertaAdapter.onItemClickListener itemListener,
+                                  final AdminOfertaAdapter.onItemClickListener itemlistener,
                                   final AdminOfertaAdapter.onLongClickListener longClickListener) {
             super(itemView);
 
@@ -79,10 +101,13 @@ public class AdminVendedorAdapter extends RecyclerView.Adapter<AdminVendedorAdap
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    int posicao = getAdapterPosition();
+                    if (itemlistener != null) {
 
-                    if (posicao != RecyclerView.NO_POSITION) {
-                        itemListener.onItemClick(posicao);
+                        int posicao = getAdapterPosition();
+
+                        if (posicao != RecyclerView.NO_POSITION) {
+                            itemlistener.onItemClick(posicao);
+                        }
                     }
                 }
             });
@@ -90,17 +115,14 @@ public class AdminVendedorAdapter extends RecyclerView.Adapter<AdminVendedorAdap
             itemView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View view) {
-                    if (longClickListener != null) {
-                        int posicao = getAdapterPosition();
-
-                        if (posicao != RecyclerView.NO_POSITION)
-                            longClickListener.onItemLongClick(posicao);
-
+                    if(longClickListener != null){
+                        int position = getAdapterPosition();
+                        if(position != RecyclerView.NO_POSITION)
+                            longClickListener.onItemLongClick(position);
                     }
                     return false;
                 }
             });
-
         }
     }
 }

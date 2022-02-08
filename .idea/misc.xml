@@ -5,6 +5,7 @@
       <map>
         <entry key="..\:/Users/administrator/AndroidStudioProjects/LojaOnlineAppMaster/app/src/main/res/drawable/bg_ui.xml" value="0.2890625" />
         <entry key="..\:/Users/administrator/AndroidStudioProjects/LojaOnlineAppMaster/app/src/main/res/layout/activity_admin.xml" value="0.1" />
+        <entry key="..\:/Users/administrator/AndroidStudioProjects/LojaOnlineAppMaster/app/src/main/res/layout/activity_admin_vendedor.xml" value="0.1" />
         <entry key="..\:/Users/administrator/AndroidStudioProjects/LojaOnlineAppMaster/app/src/main/res/layout/activity_carrinho.xml" value="0.2259963768115942" />
         <entry key="..\:/Users/administrator/AndroidStudioProjects/LojaOnlineAppMaster/app/src/main/res/layout/activity_categoria.xml" value="0.159375" />
         <entry key="..\:/Users/administrator/AndroidStudioProjects/LojaOnlineAppMaster/app/src/main/res/layout/activity_entrar.xml" value="0.67" />
@@ -13,6 +14,7 @@
         <entry key="..\:/Users/administrator/AndroidStudioProjects/LojaOnlineAppMaster/app/src/main/res/layout/activity_produto_info.xml" value="0.2073732718894009" />
         <entry key="..\:/Users/administrator/AndroidStudioProjects/LojaOnlineAppMaster/app/src/main/res/layout/activity_registrar.xml" value="0.27291666666666664" />
         <entry key="..\:/Users/administrator/AndroidStudioProjects/LojaOnlineAppMaster/app/src/main/res/layout/activity_usuario_perfil.xml" value="0.33" />
+        <entry key="..\:/Users/administrator/AndroidStudioProjects/LojaOnlineAppMaster/app/src/main/res/layout/admin_vendedor_lista.xml" value="0.1" />
         <entry key="..\:/Users/administrator/AndroidStudioProjects/LojaOnlineAppMaster/app/src/main/res/layout/categoria_produtos_lista.xml" value="0.159375" />
         <entry key="..\:/Users/administrator/AndroidStudioProjects/LojaOnlineAppMaster/app/src/main/res/layout/grid_product_layout.xml" value="0.19882246376811594" />
         <entry key="..\:/Users/administrator/AndroidStudioProjects/LojaOnlineAppMaster/app/src/main/res/layout/horizontal_item.xml" value="0.2171875" />
